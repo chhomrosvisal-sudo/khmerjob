@@ -1,0 +1,24 @@
+:root { color-scheme: light; }
+.theme-toggle { position:fixed;right:20px;bottom:20px;z-index:100;display:flex;align-items:center;gap:8px;border:1px solid #d9d1e5;border-radius:999px;padding:11px 16px;background:#fff;color:#593180;box-shadow:0 4px 20px #24113d20;font-size:12px;font-weight:600; }
+.theme-toggle:hover { background:#f0e9f8; }
+html[data-theme="dark"] { color-scheme:dark;background:#10131e;color:#e5e8f2; }
+html[data-theme="dark"] body { background:#10131e;color:#e5e8f2; }
+html[data-theme="dark"] :is(.public-site,.auth-kit,.smart-home) { --portal-bg:#10131e;--portal-ink:#e5e8f2;--portal-muted:#abb3c7;--purple:#bd94eb;--purple-dark:#9864ce;--au-text:#e5e8f2;--au-muted:#abb3c7;--au-border:#394156;--sh-ink:#e5e8f2;--sh-muted:#abb3c7;background:#10131e;color:#e5e8f2; }
+html[data-theme="dark"] :is(header,.card,.portal-panel,.portal-job-card,.category-grid>a,.advice-body,.au-card,.filters,.apply-panel,.application-card,.applicant-card,.management-table,.hero-search,.portal-navigation.is-open) { background:#1b2131;border-color:#343c50;color:#e5e8f2; }
+html[data-theme="dark"] :is(.latest-section,.categories-section,.featured-companies,.leading-employers,.featured-jobs,.portal-subtle,.employer-strip,.account-next-step,.growth,.welcome,.au-form-panel) { background:#151b29;border-color:#343c50; }
+html[data-theme="dark"] :is(h1,h2,h3,label,.stat strong,.job-card h3 a,.portal-navigation nav a,.portal-account .portal-login,.hero-search input,.hero-search select) { color:#e5e8f2; }
+html[data-theme="dark"] :is(p,small,.portal-job-company,.portal-job-meta,.panel-caption,.portal-section-description,.metadata,.matching-explainer) { color:#abb3c7; }
+html[data-theme="dark"] :is(input,select,textarea,button:not(.primary):not(.theme-toggle):not(.portal-employer)) { background-color:#232c40;border-color:#414b63;color:#e5e8f2; }
+html[data-theme="dark"] :is(input,textarea)::placeholder { color:#99a4bb; }
+html[data-theme="dark"] :is(.badge,.tags span,.portal-job-type,.portal-job-skills span,.portal-pill,.category-icon,.notice,.account-tabs,.management-filters) { background:#29314a;border-color:#414b63;color:#d5c5ed; }
+html[data-theme="dark"] :is(.public-site .primary,.portal-account .portal-employer) { background:#8050b1;color:#fff; }
+html[data-theme="dark"] .portal-brand { color:#e5e8f2!important; }
+html[data-theme="dark"] .portal-navigation nav a.active { color:#d2adf6;border-color:#bd94eb; }
+html[data-theme="dark"] .theme-toggle { background:#29314a;color:#f4d58c;border-color:#495270; }
+html[data-theme="dark"] .theme-toggle:hover { background:#35405b; }
+html[data-theme="dark"] :is(th,td,fieldset,.portal-job-bottom,.leading-item,.featured-job) { border-color:#343c50; }
+html[data-theme="dark"] :is(.au-policy-dialog,.au-toast,.sh-dropdown-panel,.sh-device,.sh-members-card,.sh-power-card,.sh-temperature,.sh-home-insights>div,.sh-security,.sh-analytics-summary,.sh-modal) { background:#1b2131;border-color:#343c50;color:#e5e8f2; }
+html[data-theme="dark"] :is(.au-field>input,.au-password-wrap>input,.au-otp input) { background:#232c40;color:#e5e8f2;border-color:#414b63; }
+html[data-theme="dark"] :is(.au-heading>p,.au-field>label,.au-switch-page,.au-form-options,.au-checkbox) { color:#abb3c7; }
+html[data-theme="dark"] .sh-welcome { background:#342b25; }
+@media(max-width:600px) { .theme-toggle { right:12px;bottom:12px;padding:11px; } .theme-toggle span { display:none; } }

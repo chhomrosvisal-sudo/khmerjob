@@ -1,0 +1,10 @@
+import { useI18n } from '../../i18n/useI18n'
+import { useId } from 'react'
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ReferenceDot } from 'recharts'
+
+export default function RechartsPowerChart({ data, selected, setSelected }) {
+  const { t } = useI18n()
+  const gradient = useId()
+  const point = data.find(item => item.month === selected) || data[0]
+  return <div className="sh-chart-canvas"><ResponsiveContainer width="100%" height={190}><AreaChart data={data} margin={{ top: 15, right: 10, bottom: 0, left: -28 }} accessibilityLayer onClick={event => { if (event?.activeLabel) setSelected(String(event.activeLabel)) }}><defs><linearGradient id={gradient} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#ffb18c" stopOpacity={.45} /><stop offset="100%" stopColor="#fff7f0" stopOpacity={.1} /></linearGradient></defs><CartesianGrid vertical={false} stroke="#f0edf3" strokeDasharray="3 4" /><XAxis tickFormatter={t} dataKey="month" tickLine={false} axisLine={false} tick={{ fontSize: 9, fill: '#aaa4b5' }} /><YAxis domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} tickFormatter={value => `${value}%`} tickLine={false} axisLine={false} tick={{ fontSize: 8, fill: '#b4aebd' }} /><Tooltip labelFormatter={t} formatter={value => [`${value}%`, t('Consumption')]} contentStyle={{ borderRadius: 10, border: '1px solid #f7dfcf', fontSize: 11 }} /><ReferenceLine x={t(point.month)} stroke="#ffd3be" strokeDasharray="3 4" /><Area type="monotone" dataKey="value" stroke="#ff9a72" strokeWidth={2.5} fill={`url(#${gradient})`} isAnimationActive={false} /><ReferenceDot x={t(point.month)} y={point.value} r={5} fill="#ff986d" stroke="white" strokeWidth={2} /></AreaChart></ResponsiveContainer><div className="sh-chart-month-buttons" role="group" aria-label={t("Inspect monthly consumption")}>{data.map(item => <button key={t(item.month)} aria-pressed={selected === item.month} aria-label={t("{v0}: {v1}% consumption", {v0: t(item.month), v1: item.value})} onClick={() => setSelected(item.month)}>{t(item.month)}</button>)}</div></div>
+}

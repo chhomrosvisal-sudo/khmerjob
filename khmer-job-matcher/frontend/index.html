@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;750;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="description" content="Explore student opportunities, manage your skills, and understand required-skill coverage with Khmer Job & Skills Matcher." />
+    <title>Khmer Job &amp; Skills Matcher</title>
+  </head>
+  <body>
+    <div id="root"><p role="status" style="padding:40px;font:16px 'Segoe UI',sans-serif;color:#69369d">Loading KhmerJob…</p></div>
+    <noscript><p style="padding:20px">Please enable JavaScript to use KhmerJob.</p></noscript>
+    <script>
+      // Show module-loading failures even when React cannot start.
+      (() => {
+        const showFailure = (message) => {
+          const root = document.getElementById('root');
+          if (!root || window.__KHMER_APP_STARTED__ || root.querySelector('[role="alert"]')) return;
+          const panel = document.createElement('section');
+          panel.setAttribute('role', 'alert');
+          panel.style.cssText = 'max-width:650px;margin:60px auto;padding:28px;background:white;border:1px solid #e5d8f1;border-radius:16px;font:15px Segoe UI,sans-serif;color:#352344';
+          const title = document.createElement('h1'); title.textContent = 'The page could not load';
+          const description = document.createElement('p'); description.textContent = 'Reload with Ctrl+F5. If it still fails, send the error below.';
+          const error = document.createElement('pre'); error.textContent = message; error.style.cssText = 'white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;background:#f8f4fc';
+          const reload = document.createElement('button'); reload.textContent = 'Reload page'; reload.style.cssText = 'padding:10px 18px;background:#69369d;color:white;border:0;border-radius:7px'; reload.onclick = () => location.reload();
+          panel.append(title, description, error, reload); root.replaceChildren(panel);
+        };
+        window.addEventListener('error', event => {
+          if (event.target instanceof HTMLScriptElement) showFailure('Failed to download ' + event.target.src);
+          else if (event.message) showFailure(event.message);
+        }, true);
+        window.addEventListener('unhandledrejection', event => showFailure(event.reason?.message || String(event.reason)));
+      })();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

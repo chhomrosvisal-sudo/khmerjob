@@ -1,0 +1,12 @@
+import { useI18n } from '../../i18n/useI18n'
+import { CloudSun, ThermometerSun } from 'lucide-react'
+
+function WalkIllustration() {
+  const { t } = useI18n()
+  return <svg className="sh-walk-art" viewBox="0 0 300 210" role="img" aria-label={t("Original illustration of a woman walking her dog")}><ellipse cx="165" cy="185" rx="120" ry="12" fill="#ead3a3" opacity=".4" /><path d="M30 150q35-70 80-24t95-15q60-18 68 54H24z" fill="#f5dea4" /><path d="M160 50q3-20 18-17 15-20 28-1 22-3 25 18zM40 60q5-14 18-11 13-15 25 0 18-2 20 13z" fill="#fff8e4" /><path d="M254 182v-48m0 24-12-14m12 0 10-13" fill="none" stroke="#c6b17b" strokeWidth="3" strokeLinecap="round" /><ellipse cx="145" cy="55" rx="17" ry="21" fill="#a86437" /><path d="M132 68q-21 5-24 23l17 24 25-7-2-29" fill="#7b3fc6" /><path d="M125 108l-6 39-15 31 12 4 22-31 7-35" fill="#5d365e" /><path d="M138 110l17 30 1 40 12 1 3-47-15-33" fill="#774673" /><path d="m104 178-7 9h22l-3-7m40 0 1 8h23l-12-9" fill="#a8653b" /><path d="m117 86-12 24-20 9m60-34 21 28 22 3" fill="none" stroke="#c88c62" strokeWidth="8" strokeLinecap="round" /><ellipse cx="146" cy="56" rx="12" ry="16" fill="#d89a6e" /><path d="M130 51q10-31 28-10l4 24-9-7-3-13z" fill="#7e432b" /><path d="m187 115 24 47" stroke="#aa805d" fill="none" strokeWidth="1.7" /><ellipse cx="214" cy="169" rx="22" ry="12" fill="#fff8ee" /><path d="M230 170q12-17 3-23-14-6-18 8" fill="#fff8ee" /><path d="M225 150q-12 0-10 14l7 2" fill="#c68b58" /><path d="m200 174-3 12m19-10 5 9m-25-22q-13-8-15-2" stroke="#fff8ee" fill="none" strokeWidth="6" strokeLinecap="round" /><circle cx="232" cy="155" r="1.6" fill="#6e4b3a" /><path d="M238 157h4" stroke="#6e4b3a" strokeWidth="3" strokeLinecap="round" /></svg>
+}
+
+export default function WelcomeBanner() {
+  const { t } = useI18n()
+  return <section className="sh-welcome"><div className="sh-welcome-copy"><span className="sh-eyebrow">{t("A BEAUTIFUL DAY TO BE HOME")}</span><h1>{t("Hello, Scarlett!")}</h1><p>{t("Welcome Home! The air quality is good & fresh")}<br className="sh-desktop-break" />{t(" you can go out today.")}</p><div className="sh-weather"><span><ThermometerSun size={19} /><strong>+25°C</strong><small>{t("Outdoor temperature")}</small></span><span><CloudSun size={24} /><strong>{t("Fuzzy cloudy")}</strong><small>{t("Weather forecast")}</small></span></div></div><WalkIllustration /><span className="sh-weather-demo">{t("Illustrative weather")}</span></section>
+}
