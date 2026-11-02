@@ -782,3 +782,40 @@ Switch to light mode	ប្តូរទៅពន្លឺថ្ងៃ	切换为�
 Switch to night mode	ប្តូរទៅពេលយប់	切换为深色模式
 Light mode	ពន្លឺថ្ងៃ	浅色模式
 Night mode	ពេលយប់	深色模式
+Dashboard analytics	ការវិភាគផ្ទាំងគ្រប់គ្រង	仪表板分析
+Start date	កាលបរិច្ឆេទចាប់ផ្តើម	开始日期
+End date	កាលបរិច្ឆេទបញ្ចប់	结束日期
+Reset	កំណត់ឡើងវិញ	重置
+Refresh	ផ្ទុកឡើងវិញ	刷新
+Export dashboard CSV	នាំចេញផ្ទាំងគ្រប់គ្រងជា CSV	导出仪表板 CSV
+Approved companies	ក្រុមហ៊ុនដែលបានអនុម័ត	已批准的公司
+Active jobs	ការងារដែលកំពុងបើក	有效职位
+AI job matches	លទ្ធផលផ្គូផ្គងការងារ AI	AI 职位匹配
+Pending employer approvals	និយោជករង់ចាំការអនុម័ត	待审批雇主
+Pending job approvals	ការងាររង់ចាំការអនុម័ត	待审批职位
+Not recorded yet	មិនទាន់បានកត់ត្រា	尚未记录
+Monthly student registrations	ការចុះឈ្មោះនិស្សិតប្រចាំខែ	每月学生注册
+Monthly job postings	ការប្រកាសការងារប្រចាំខែ	每月职位发布
+Top 10 in-demand skills	ជំនាញដែលមានតម្រូវការខ្ពស់បំផុតទាំង ១០	需求最高的十项技能
+View data	មើលទិន្នន័យ	查看数据
+No records in this date range.	គ្មានទិន្នន័យក្នុងចន្លោះកាលបរិច្ឆេទនេះទេ។	此日期范围内没有记录。
+Recent platform activities	សកម្មភាពថ្មីៗលើប្រព័ន្ធ	近期平台活动
+How these metrics are calculated	របៀបគណនាសូចនាករទាំងនេះ	指标计算方法
+Account registered	គណនីបានចុះឈ្មោះ	账户已注册
+Job posted	ការងារបានប្រកាស	职位已发布
+Application submitted	ពាក្យសុំបានដាក់	申请已提交
+Confirm administrative action	បញ្ជាក់សកម្មភាពអ្នកគ្រប់គ្រង	确认管理操作
+This changes account access or job visibility. Confirm that you want to continue.	សកម្មភាពនេះផ្លាស់ប្តូរសិទ្ធិចូលគណនី ឬការបង្ហាញការងារ។ សូមបញ្ជាក់ដើម្បីបន្ត។	此操作会更改账户访问权限或职位可见性。请确认是否继续。
+Cancel	បោះបង់	取消
+Confirm	បញ្ជាក់	确认
+Your company publishing access has been approved.	សិទ្ធិប្រកាសការងាររបស់ក្រុមហ៊ុនអ្នកត្រូវបានអនុម័ត។	您的公司职位发布权限已获批准。
+Your company publishing access has been suspended. Contact the administrator for details.	សិទ្ធិប្រកាសការងាររបស់ក្រុមហ៊ុនអ្នកត្រូវបានផ្អាក។ សូមទាក់ទងអ្នកគ្រប់គ្រងសម្រាប់ព័ត៌មានលម្អិត។	您的公司职位发布权限已暂停。请联系管理员了解详情。
+Reactivate the employer account before approving publishing	សូមបើកគណនីនិយោជកឡើងវិញមុនអនុម័តសិទ្ធិប្រកាស	请先恢复雇主账户，再批准发布权限
+Mark all as read	សម្គាល់ទាំងអស់ថាបានអាន	全部标为已读
+Unread only	បង្ហាញតែសារមិនទាន់អាន	仅显示未读
+Page {page}	ទំព័រ {page}	第 {page} 页
+Registration, job, application and skill metrics use the selected creation dates.	សូចនាករចុះឈ្មោះ ការងារ ពាក្យសុំ និងជំនាញប្រើកាលបរិច្ឆេទបង្កើតដែលបានជ្រើសរើស។	注册、职位、申请和技能指标按所选创建日期统计。
+Company approval and pending employer counts are current totals; approval means publishing access, not document verification.	ចំនួនក្រុមហ៊ុនបានអនុម័ត និងនិយោជករង់ចាំគឺជាចំនួនសរុបបច្ចុប្បន្ន។ ការអនុម័តមានន័យថាអនុញ្ញាតឱ្យប្រកាសការងារ មិនមែនការផ្ទៀងផ្ទាត់ឯកសារទេ។	已批准公司和待审批雇主为当前总数；批准表示拥有发布权限，并不表示文件已验证。
+Active jobs require an active listing and approved employer. Demo records remain included and labeled in management pages.	ការងារដែលកំពុងបើកត្រូវមានប្រកាសសកម្ម និងនិយោជកបានអនុម័ត។ ទិន្នន័យសាកល្បងត្រូវបានរាប់បញ្ចូល និងសម្គាល់នៅទំព័រគ្រប់គ្រង។	有效职位需处于开放状态且雇主已获批准。演示记录仍计入，并在管理页面标注。
+AI match history and job approval states are not stored yet; their counts are unavailable.	ប្រវត្តិផ្គូផ្គង AI និងស្ថានភាពអនុម័តការងារមិនទាន់ត្រូវបានរក្សាទុក ដូច្នេះមិនមានចំនួនទេ។	尚未存储 AI 匹配历史和职位审批状态，因此无法提供数量。
+Recent activity shows record creation, not administrator audit history.	សកម្មភាពថ្មីៗបង្ហាញការបង្កើតទិន្នន័យ មិនមែនប្រវត្តិសវនកម្មអ្នកគ្រប់គ្រងទេ។	近期活动显示记录创建情况，并非管理员审计历史。

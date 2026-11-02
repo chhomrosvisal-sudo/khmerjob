@@ -1,5 +1,7 @@
 # Khmer Job & Skills Matcher
 
+Latest admin work: see the [Milestone 0 audit and Milestone 1 implementation/checks](docs/ADMIN_DASHBOARD_MILESTONES.md). Applications now has a real admin search/filter/pagination page; Skill Gap Analytics and Activity Logs remain future milestones.
+
 A Cambodian recruitment portal with a React/Vite frontend, FastAPI API, and MySQL storage. The public website, job-seeker accounts, employer workspace, and administrator dashboard share one authentication system. Fictional sample employers and vacancies are clearly labeled.
 
 ## Open the running application
@@ -229,3 +231,17 @@ Core entities are `users`, `student_profiles`, `skills`, `student_skills`, `empl
 ## Delivery limits
 
 See [release checks](docs/RELEASE_CHECKS.md). English/Khmer navigation exists, but full-content translation is not complete. OCR, live chat, validated ML ranking quality, external OAuth, and production deployment are not claimed. Final service terms/privacy text and a verified email provider are required before a public launch. The Smart Home concept remains a labeled mock interface, not real recruitment analytics or physical-device control.
+
+## Admin dashboard workspace
+
+Sign in with an existing administrator account at `/login`, then open `/dashboard`. The sidebar links to the overview, users, company approvals, job moderation, and skills/matching tools. Overview counts and the application pipeline use the live admin API. The employer review queue supports approval; the full company directory supports search and a pending-only filter. CSV export includes the existing platform summary. No growth rates or historical trends are inferred from current totals.
+
+Run `npm run test:admin` from `frontend` for fixture-backed rendering checks of populated tables, application counts, pending approvals, protected administrator controls, empty results, and API errors. These checks do not change the database or replace browser interaction testing.
+
+## Persistent sign-in
+
+Successful password and social sign-in saves the access token and its expiry in this browser's local storage. Reloading or reopening the site verifies the saved token through `/api/auth/me` before showing account content; user roles are not trusted from browser storage. Logout clears it immediately and revokes issued sessions through the existing backend. Logout in another tab is synchronized. Network errors during restoration show Retry and Sign out without deleting the saved token.
+
+The existing access-token lifetime still applies (`ACCESS_TOKEN_MINUTES`, default 30 minutes); there is no refresh-token renewal. Browser storage restrictions fall back to a session for the current visit. `Remember me` controls the saved email only. Session helper checks run as part of `npm test`; route rendering also checks that unverified stored credentials do not mount private content.
+
+The admin sidebar groups navigation under Overview, Management, AI & Analytics, and System. Students filters accounts to the student role; Employers lists companies; Approvals shows pending employers. Skills Management includes the searchable skill catalog and creation form, separate from AI Job Matching. Reports shows current totals and exports the existing CSV summary. Notifications uses the signed-in administrator's notification inbox. Applications, Skill Gap Analytics, and Activity Logs are visibly marked Coming soon and disabled until their admin workflows are implemented.

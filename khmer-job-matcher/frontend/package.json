@@ -11,6 +11,7 @@
     "test:ui": "vitest run",
     "test:smart-home": "node tests/smart-home-ssr.mjs",
     "test:routes": "node tests/smart-home-ssr.mjs",
+    "test:admin": "node tests/admin-ssr.mjs",
     "test:i18n": "node tests/i18n-ssr.mjs",
     "i18n:build": "node scripts/build-translations.mjs",
     "test:e2e": "playwright test",

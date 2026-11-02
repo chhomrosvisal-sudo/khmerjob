@@ -7,7 +7,9 @@ export default function RequireAuth({ role, children }) {
   const location = useLocation()
   if (!user) {
     const next = location.pathname + location.search + location.hash
-    return <Navigate to={'/login?' + new URLSearchParams({ next })} replace />
+    const params = new URLSearchParams({ next })
+    if (role === 'employer') params.set('portal', 'employer')
+    return <Navigate to={'/login?' + params} replace />
   }
   if (role && user.role !== role) return <Navigate to={roleHome(user.role)} replace />
   return children

@@ -1,16 +1,47 @@
 from fastapi import APIRouter, HTTPException, Query, Response
 from pydantic import Field, field_validator
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.exc import IntegrityError
 
 from app.core.dependencies import AdminUser, Database
-from app.models import Skill, User, Employer, Job, Application
+from app.models import Skill, User, Employer, Job, Application, StudentProfile, Notification
+from app.schemas.admin import AdminApplicationPage, AdminOverview, ApplicationStatus, DashboardAnalytics
 from app.schemas.auth import StrictInput, UserOut
 from app.schemas.jobs import SkillOut
 import csv
 from io import StringIO
+from datetime import date
+from app.services.admin_dashboard import dashboard_data
 
 router = APIRouter(prefix='/api/admin', tags=['admin'])
+
+
+@router.get('/dashboard', response_model=DashboardAnalytics)
+def dashboard(user: AdminUser, db: Database, response: Response,
+              start: date | None = None, end: date | None = None):
+    response.headers['Cache-Control'] = 'no-store'
+    return dashboard_data(db, start, end)
+
+
+@router.get('/dashboard/export')
+def dashboard_export(user: AdminUser, db: Database, start: date | None = None, end: date | None = None):
+    data = dashboard_data(db, start, end)
+    stream = StringIO()
+    writer = csv.writer(stream)
+    writer.writerow(['Period', str(data['start']), str(data['end'])])
+    writer.writerow(['Metric', 'Count'])
+    for key in ['students', 'employers', 'verified_companies', 'active_jobs', 'applications',
+                'ai_matches', 'pending_jobs', 'pending_employers']:
+        writer.writerow([key, data[key] if data[key] is not None else 'Unavailable'])
+    for group in ['student_registrations', 'job_postings', 'application_statuses', 'top_skills']:
+        writer.writerow([group, 'Count'])
+        for row in data[group]:
+            label = str(row.get('month', row.get('name', '')))
+            writer.writerow(["'" + label if label.startswith(('=', '+', '-', '@', '\t', '\r', '\n')) else label, row['count']])
+    for note in data['notes']:
+        writer.writerow(['Definition', note])
+    return Response(stream.getvalue(), media_type='text/csv', headers={
+        'Cache-Control': 'no-store', 'Content-Disposition': 'attachment; filename=dashboard-report.csv'})
 
 
 class SkillCreate(StrictInput):
@@ -39,19 +70,59 @@ def users(user: AdminUser, db: Database, response: Response, page: int = Query(1
             'total': db.scalar(select(func.count()).select_from(statement.subquery())), 'page': page, 'page_size': page_size}
 
 
-@router.get('/overview')
-def overview(user: AdminUser, db: Database):
+def overview_counts(db):
     return {'users': db.scalar(select(func.count()).select_from(User)),
+            'students': db.scalar(select(func.count()).select_from(User).where(User.role == 'student')),
             'employers': db.scalar(select(func.count()).select_from(Employer)),
             'jobs': db.scalar(select(func.count()).select_from(Job)),
+            'open_jobs': db.scalar(select(func.count()).select_from(Job).join(Employer).where(
+                Job.is_active.is_(True), Employer.approved.is_(True))),
             'applications': db.scalar(select(func.count()).select_from(Application)),
+            'skills': db.scalar(select(func.count()).select_from(Skill)),
             'pending_employers': db.scalar(select(func.count()).select_from(Employer).where(Employer.approved.is_(False))),
             'statuses': dict(db.execute(select(Application.status, func.count()).group_by(Application.status)).all())}
 
 
+@router.get('/overview', response_model=AdminOverview)
+def overview(user: AdminUser, db: Database, response: Response):
+    response.headers['Cache-Control'] = 'no-store'
+    return overview_counts(db)
+
+
+@router.get('/applications', response_model=AdminApplicationPage)
+def applications(user: AdminUser, db: Database, response: Response,
+                 page: int = Query(1, ge=1), page_size: int = Query(12, ge=1, le=100),
+                 q: str = Query('', max_length=160), status: ApplicationStatus | None = None):
+    response.headers['Cache-Control'] = 'no-store'
+    statement = (select(Application, User, StudentProfile.name, Job, Employer)
+                 .select_from(Application)
+                 .join(User, User.id == Application.user_id)
+                 .outerjoin(StudentProfile, StudentProfile.user_id == User.id)
+                 .join(Job, Job.id == Application.job_id)
+                 .join(Employer, Employer.id == Job.employer_id))
+    if q.strip():
+        statement = statement.where(or_(
+            User.email.contains(q.strip(), autoescape=True),
+            StudentProfile.name.contains(q.strip(), autoescape=True),
+            Job.title.contains(q.strip(), autoescape=True),
+            Employer.name.contains(q.strip(), autoescape=True)))
+    if status:
+        statement = statement.where(Application.status == status)
+    total = db.scalar(select(func.count()).select_from(statement.subquery()))
+    rows = db.execute(statement.order_by(Application.created_at.desc(), Application.id.desc())
+                      .offset((page - 1) * page_size).limit(page_size)).all()
+    return {'items': [
+        {'id': application.id, 'applicant_id': applicant.id,
+         'applicant_name': name or '', 'applicant_email': applicant.email,
+         'job_id': job.id, 'job_title': job.title, 'company_name': company.name,
+         'status': application.status, 'created_at': application.created_at, 'is_demo': job.is_demo}
+        for application, applicant, name, job, company in rows],
+        'total': total, 'page': page, 'page_size': page_size}
+
+
 @router.get('/report')
 def report(user: AdminUser, db: Database):
-    data = overview(user, db)
+    data = overview_counts(db)
     stream = StringIO()
     writer = csv.writer(stream)
     writer.writerow(['Metric', 'Count'])
@@ -86,8 +157,9 @@ def user_state(user_id: int, payload: ActivePatch, user: AdminUser, db: Database
 
 
 @router.get('/companies')
-def all_companies(user: AdminUser, db: Database, page: int = Query(1, ge=1), page_size: int = Query(12, ge=1, le=100),
+def all_companies(user: AdminUser, db: Database, response: Response, page: int = Query(1, ge=1), page_size: int = Query(12, ge=1, le=100),
                   q: str = Query('', max_length=160), pending_only: bool = False):
+    response.headers['Cache-Control'] = 'no-store'
     statement = select(Employer)
     if q.strip():
         statement = statement.where(Employer.name.contains(q.strip(), autoescape=True))
@@ -104,16 +176,26 @@ class ApprovalPatch(StrictInput):
 
 @router.patch('/companies/{company_id}')
 def approve_company(company_id: int, payload: ApprovalPatch, user: AdminUser, db: Database):
-    item = db.get(Employer, company_id)
+    item = db.scalar(select(Employer).where(Employer.id == company_id).with_for_update())
     if item is None:
         raise HTTPException(404, 'Company not found')
+    account = db.get(User, item.user_id) if item.user_id else None
+    if payload.approved and account is not None and not account.is_active:
+        raise HTTPException(409, 'Reactivate the employer account before approving publishing')
+    if item.approved == payload.approved:
+        return {'id': item.id, 'approved': item.approved}
     item.approved = payload.approved
+    if account is not None:
+        db.add(Notification(user_id=account.id, message=(
+            'Your company publishing access has been approved.' if payload.approved else
+            'Your company publishing access has been suspended. Contact the administrator for details.')))
     db.commit()
     return {'id': item.id, 'approved': item.approved}
 
 
 @router.get('/jobs')
-def all_jobs(user: AdminUser, db: Database, page: int = Query(1, ge=1), page_size: int = Query(12, ge=1, le=100), q: str = Query('', max_length=160)):
+def all_jobs(user: AdminUser, db: Database, response: Response, page: int = Query(1, ge=1), page_size: int = Query(12, ge=1, le=100), q: str = Query('', max_length=160)):
+    response.headers['Cache-Control'] = 'no-store'
     statement = select(Job)
     if q.strip():
         statement = statement.where(Job.title.contains(q.strip(), autoescape=True))
@@ -134,6 +216,8 @@ def moderate_job(job_id: int, payload: ActivePatch, user: AdminUser, db: Databas
 
 @router.post('/skills', response_model=SkillOut, status_code=201)
 def add_skill(payload: SkillCreate, user: AdminUser, db: Database):
+    if db.scalar(select(Skill.id).where(func.lower(Skill.name) == payload.name.lower())) is not None:
+        raise HTTPException(409, 'Skill already exists')
     skill = Skill(**payload.model_dump())
     try:
         db.add(skill)

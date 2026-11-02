@@ -46,7 +46,7 @@ export default function Login() {
       <FormInput name="email" label={t("Email")} type="email" placeholder={t("you@example.com")} autoComplete="username" maxLength={254} inputProps={form.register('email')} error={errors.email} disabled={isSubmitting} />
       <PasswordInput placeholder={t("Enter your password")} autoComplete="current-password" maxLength={128} inputProps={form.register('password')} error={errors.password} disabled={isSubmitting} />
       <div className="au-form-options"><label className="au-checkbox"><input type="checkbox" {...form.register('remember')} /><span>{t("Remember me")}</span></label><Link to={authLink('/forgot-password', params)}>{t("Forgot Password?")}</Link></div>
-      <p className="au-small-note">{t("Remember me saves your email only. Your session stays in memory.")}</p><FormError message={error} />
+      <p className="au-small-note">{t("Remember me saves your email. You stay signed in until you sign out or your session expires.")}</p><FormError message={error} />
       <PrimaryButton busy={isSubmitting} busyLabel={t("Logging in…")}>{t("Login")}</PrimaryButton>
     </form><p className="au-switch-page">{t("Don't have an account? ")}<Link to={authLink('/register', params)}>{t("Sign Up")}</Link></p><SocialLoginButtons /><AuthToast message={success} onDismiss={() => setSuccess('')} />
   </AuthLayout>

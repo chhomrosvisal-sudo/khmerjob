@@ -1,11 +1,32 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { safeReturnPath, postLoginPath, roleHome } from '../src/services/auth-navigation.js'
+import { authLink } from '../src/services/auth-links.js'
+
+test('employer registration and recovery preserve the employer portal', () => {
+  const params = new URLSearchParams('portal=employer&next=/employer/applications')
+  const registration = new URL(authLink('/register', params), 'http://local.invalid')
+  assert.equal(registration.pathname, '/employer-register')
+  assert.equal(registration.searchParams.get('next'), '/employer/applications')
+  const recovery = new URL(authLink('/forgot-password', params), 'http://local.invalid')
+  assert.equal(recovery.searchParams.get('portal'), 'employer')
+  assert.equal(authLink('/register', new URLSearchParams()), '/register')
+})
+
+test('employers return to their requested workspace after login', () => {
+  for (const path of ['/employer/applications?page=2', '/employer/company', '/employer/analytics']) {
+    assert.equal(postLoginPath({ role: 'employer' }, path), path)
+    assert.equal(postLoginPath({ role: 'student' }, path), '/jobs')
+  }
+})
 
 test('login destinations preserve private paths, searches, and anchors', () => {
   assert.equal(safeReturnPath('/smart-home'), '/smart-home')
   assert.equal(safeReturnPath('/smart-home/devices?q=lamp#status'), '/smart-home/devices?q=lamp#status')
   assert.equal(safeReturnPath('/profile'), '/profile')
+  assert.equal(safeReturnPath('/admin/students?q=dara'), '/admin/students?q=dara')
+  assert.equal(safeReturnPath('/dashboard/applications?page=2'), '/dashboard/applications?page=2')
+  assert.equal(postLoginPath({ role: 'employer' }, '/notifications'), '/notifications')
   assert.equal(safeReturnPath('/employer/jobs/3/edit'), '/employer/jobs/3/edit')
 })
 

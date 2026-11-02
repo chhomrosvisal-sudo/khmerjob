@@ -44,7 +44,7 @@ describe('API-backed workflows', () => {
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'student@example.com' } })
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'correct-password-123' } })
     fireEvent.submit(screen.getByRole('button', { name: 'Login' }).closest('form'))
-    expect(await screen.findByRole('alert')).toHaveTextContent('Invalid or expired credentials')
+    expect((await screen.findByText('Invalid or expired credentials')).closest('[role="alert"]')).toBeInTheDocument()
     expect(signIn).toHaveBeenCalledWith({ email: 'student@example.com', password: 'correct-password-123' })
     expect(screen.getByRole('button', { name: 'Login' })).toBeEnabled()
   })

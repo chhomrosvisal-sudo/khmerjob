@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2026 at 09:23 AM
+-- Generation Time: Nov 02, 2026 at 12:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,7 +112,27 @@ INSERT INTO `jobs` (`id`, `employer_id`, `title`, `description`, `location`, `jo
 (1, 1, 'Junior Frontend Developer', 'DEMONSTRATION ONLY — fictional employer and vacancy. Build accessible, responsive interfaces alongside a mentor.', 'Phnom Penh', 'Full-time', 1, 'initial-frontend', '2026-10-28 08:49:00', 1, 'technology', 'Not specified', NULL, NULL),
 (2, 2, 'Web Development Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Maintain educational demo websites and test mobile experiences.', 'Siem Reap', 'Internship', 1, 'initial-web-intern', '2026-10-28 08:49:00', 1, 'technology', 'Not specified', NULL, NULL),
 (3, 3, 'Junior Data Analyst', 'DEMONSTRATION ONLY — fictional employer and vacancy. Clean sample datasets and explain reports to a research team.', 'Phnom Penh', 'Full-time', 1, 'initial-analyst', '2026-10-28 08:49:00', 1, 'technology', 'Not specified', NULL, NULL),
-(4, 4, 'React Developer Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Build reusable components and learn team code reviews.', 'Remote', 'Internship', 1, 'initial-react-intern', '2026-10-28 08:49:00', 1, 'technology', 'Not specified', NULL, NULL);
+(4, 4, 'React Developer Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Build reusable components and learn team code reviews.', 'Remote', 'Internship', 1, 'initial-react-intern', '2026-10-28 08:49:00', 1, 'technology', 'Not specified', NULL, NULL),
+(5, 1, 'Junior Python API Developer', 'DEMONSTRATION ONLY — fictional employer and vacancy. Develop REST endpoints, validate requests, and write API tests with senior guidance.', 'Phnom Penh', 'Full-time', 1, 'initial-extra-python-api', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(6, 1, 'Junior Full-Stack Developer', 'DEMONSTRATION ONLY — fictional employer and vacancy. Connect responsive React pages to backend APIs and review changes with a mentor.', 'Phnom Penh', 'Full-time', 1, 'initial-extra-fullstack', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(7, 1, 'Software QA Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Test student-facing workflows, document defects, and maintain regression checklists.', 'Phnom Penh', 'Internship', 1, 'initial-extra-qa', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(8, 4, 'Junior Mobile Developer', 'DEMONSTRATION ONLY — fictional employer and vacancy. Build mobile screens and test accessibility and API integration on Android devices.', 'Remote', 'Full-time', 1, 'initial-extra-mobile', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(9, 4, 'UI/UX Design Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Prototype accessible interfaces and summarize usability feedback for the design team.', 'Phnom Penh', 'Internship', 1, 'initial-extra-ui', '2026-10-28 16:33:31', 1, 'design', 'Not specified', NULL, NULL),
+(10, 4, 'Junior Graphic Designer', 'DEMONSTRATION ONLY — fictional employer and vacancy. Prepare social media graphics and print layouts using a consistent visual identity.', 'Siem Reap', 'Part-time', 1, 'initial-extra-design', '2026-10-28 16:33:31', 1, 'design', 'Not specified', NULL, NULL),
+(11, 3, 'Database Assistant', 'DEMONSTRATION ONLY — fictional employer and vacancy. Validate imports, prepare reporting queries, and document database quality checks.', 'Phnom Penh', 'Full-time', 1, 'initial-extra-sql', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(12, 3, 'Business Intelligence Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Build dashboard prototypes and explain reporting metrics with an analyst mentor.', 'Remote', 'Internship', 1, 'initial-extra-bi', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(13, 3, 'Machine Learning Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Evaluate baseline models on sample data and document their limitations.', 'Phnom Penh', 'Internship', 1, 'initial-extra-ml', '2026-10-28 16:33:31', 1, 'technology', 'Not specified', NULL, NULL),
+(14, 3, 'Research Data Assistant', 'DEMONSTRATION ONLY — fictional employer and vacancy. Clean survey spreadsheets, check consistency, and prepare research summaries.', 'Battambang', 'Part-time', 1, 'initial-extra-research', '2026-10-28 16:33:32', 1, 'technology', 'Not specified', NULL, NULL),
+(15, 2, 'IT Support Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Assist staff with device setup and document common troubleshooting steps.', 'Siem Reap', 'Internship', 1, 'initial-extra-support', '2026-10-28 16:33:32', 1, 'technology', 'Not specified', NULL, NULL),
+(16, 2, 'Khmer Educational Content Assistant', 'DEMONSTRATION ONLY — fictional employer and vacancy. Draft Khmer learning materials and review language clarity with educators.', 'Siem Reap', 'Part-time', 1, 'initial-extra-content', '2026-10-28 16:33:32', 1, 'other', 'Not specified', NULL, NULL),
+(17, 2, 'English Learning Facilitator', 'DEMONSTRATION ONLY — fictional employer and vacancy. Support beginner practice sessions and organize student learning resources.', 'Battambang', 'Part-time', 1, 'initial-extra-english', '2026-10-28 16:33:32', 1, 'other', 'Not specified', NULL, NULL),
+(18, 4, 'Digital Marketing Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Plan sample campaigns and summarize engagement metrics for team review.', 'Phnom Penh', 'Internship', 1, 'initial-extra-marketing', '2026-10-28 16:33:32', 1, 'marketing', 'Not specified', NULL, NULL),
+(19, 4, 'Social Media Assistant', 'DEMONSTRATION ONLY — fictional employer and vacancy. Prepare a content calendar and coordinate bilingual social posts.', 'Remote', 'Part-time', 1, 'initial-extra-social', '2026-10-28 16:33:32', 1, 'marketing', 'Not specified', NULL, NULL),
+(20, 1, 'Junior Accounting Assistant', 'DEMONSTRATION ONLY — fictional employer and vacancy. Reconcile practice invoices and organize monthly bookkeeping records under supervision.', 'Phnom Penh', 'Full-time', 1, 'initial-extra-accounting', '2026-10-28 16:33:32', 1, 'accounting', 'Not specified', NULL, NULL),
+(21, 2, 'Human Resources Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Coordinate interview schedules and maintain confidential recruitment documentation.', 'Siem Reap', 'Internship', 1, 'initial-extra-hr', '2026-10-28 16:33:32', 1, 'other', 'Not specified', NULL, NULL),
+(22, 1, 'Sales Support Assistant', 'DEMONSTRATION ONLY — fictional employer and vacancy. Prepare product information and assist the team with customer follow-up records.', 'Sihanoukville', 'Full-time', 1, 'initial-extra-sales', '2026-10-28 16:33:32', 1, 'other', 'Not specified', NULL, NULL),
+(23, 1, 'Junior Project Coordinator', 'DEMONSTRATION ONLY — fictional employer and vacancy. Track tasks, prepare meeting notes, and communicate delivery updates.', 'Phnom Penh', 'Full-time', 1, 'initial-extra-project', '2026-10-28 16:33:32', 1, 'other', 'Not specified', NULL, NULL),
+(24, 4, 'E-commerce Operations Intern', 'DEMONSTRATION ONLY — fictional employer and vacancy. Review product listings and support order tracking in a training storefront.', 'Siem Reap', 'Internship', 1, 'initial-extra-ecommerce', '2026-10-28 16:33:32', 1, 'other', 'Not specified', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -146,7 +166,69 @@ INSERT INTO `job_skills` (`job_id`, `skill_id`, `required`, `proficiency`) VALUE
 (4, 3, 1, 'beginner'),
 (4, 4, 1, 'beginner'),
 (4, 5, 1, 'beginner'),
-(4, 9, 1, 'beginner');
+(4, 9, 1, 'beginner'),
+(5, 5, 1, 'beginner'),
+(5, 6, 1, 'beginner'),
+(5, 7, 1, 'beginner'),
+(5, 10, 1, 'beginner'),
+(6, 3, 1, 'beginner'),
+(6, 4, 1, 'beginner'),
+(6, 6, 1, 'beginner'),
+(6, 7, 1, 'beginner'),
+(7, 5, 1, 'beginner'),
+(7, 11, 1, 'beginner'),
+(7, 12, 1, 'beginner'),
+(8, 3, 1, 'beginner'),
+(8, 5, 1, 'beginner'),
+(8, 13, 1, 'beginner'),
+(9, 12, 1, 'beginner'),
+(9, 14, 1, 'beginner'),
+(9, 15, 1, 'beginner'),
+(10, 16, 1, 'beginner'),
+(10, 17, 1, 'beginner'),
+(10, 18, 1, 'beginner'),
+(11, 7, 1, 'beginner'),
+(11, 8, 1, 'beginner'),
+(11, 19, 1, 'beginner'),
+(12, 7, 1, 'beginner'),
+(12, 8, 1, 'beginner'),
+(12, 20, 1, 'beginner'),
+(13, 6, 1, 'beginner'),
+(13, 21, 1, 'beginner'),
+(13, 22, 1, 'beginner'),
+(14, 8, 1, 'beginner'),
+(14, 12, 1, 'beginner'),
+(14, 22, 1, 'beginner'),
+(15, 12, 1, 'beginner'),
+(15, 23, 1, 'beginner'),
+(15, 24, 1, 'beginner'),
+(16, 12, 1, 'beginner'),
+(16, 25, 1, 'beginner'),
+(16, 26, 1, 'beginner'),
+(17, 12, 1, 'beginner'),
+(17, 27, 1, 'beginner'),
+(17, 28, 1, 'beginner'),
+(18, 8, 1, 'beginner'),
+(18, 26, 1, 'beginner'),
+(18, 29, 1, 'beginner'),
+(19, 18, 1, 'beginner'),
+(19, 25, 1, 'beginner'),
+(19, 30, 1, 'beginner'),
+(20, 8, 1, 'beginner'),
+(20, 12, 1, 'beginner'),
+(20, 31, 1, 'beginner'),
+(21, 8, 1, 'beginner'),
+(21, 12, 1, 'beginner'),
+(21, 32, 1, 'beginner'),
+(22, 12, 1, 'beginner'),
+(22, 27, 1, 'beginner'),
+(22, 33, 1, 'beginner'),
+(23, 8, 1, 'beginner'),
+(23, 12, 1, 'beginner'),
+(23, 34, 1, 'beginner'),
+(24, 8, 1, 'beginner'),
+(24, 26, 1, 'beginner'),
+(24, 35, 1, 'beginner');
 
 -- --------------------------------------------------------
 
@@ -211,8 +293,8 @@ CREATE TABLE `rate_limits` (
 --
 
 INSERT INTO `rate_limits` (`key`, `window_start`, `count`) VALUES
-('7b50bc4e3576c57f8181cbdd4f14ea329a89188ab4473cf3e03d52a4ed94ecad', '2026-10-28 07:48:50', 3),
-('991e604f66c5073e0880e4b0809cfde635d4e55ea94212c99e9f0473b5b131a9', '2026-10-28 07:48:50', 3);
+('7b50bc4e3576c57f8181cbdd4f14ea329a89188ab4473cf3e03d52a4ed94ecad', '2026-11-02 09:58:15', 1),
+('991e604f66c5073e0880e4b0809cfde635d4e55ea94212c99e9f0473b5b131a9', '2026-11-02 09:58:15', 1);
 
 -- --------------------------------------------------------
 
@@ -279,7 +361,33 @@ INSERT INTO `skills` (`id`, `name`, `name_km`) VALUES
 (6, 'Python', NULL),
 (7, 'SQL', NULL),
 (8, 'Excel', NULL),
-(9, 'TypeScript', NULL);
+(9, 'TypeScript', NULL),
+(10, 'FastAPI', NULL),
+(11, 'Software Testing', NULL),
+(12, 'Communication', NULL),
+(13, 'React Native', NULL),
+(14, 'Figma', NULL),
+(15, 'UI/UX Design', NULL),
+(16, 'Adobe Photoshop', NULL),
+(17, 'Adobe Illustrator', NULL),
+(18, 'Graphic Design', NULL),
+(19, 'MySQL', NULL),
+(20, 'Power BI', NULL),
+(21, 'Scikit-learn', NULL),
+(22, 'Data Analysis', NULL),
+(23, 'IT Support', NULL),
+(24, 'Networking', NULL),
+(25, 'Khmer', NULL),
+(26, 'Content Writing', NULL),
+(27, 'English', NULL),
+(28, 'Teaching', NULL),
+(29, 'Digital Marketing', NULL),
+(30, 'Social Media Marketing', NULL),
+(31, 'Accounting', NULL),
+(32, 'Human Resources', NULL),
+(33, 'Sales', NULL),
+(34, 'Project Management', NULL),
+(35, 'Customer Service', NULL);
 
 -- --------------------------------------------------------
 
@@ -344,7 +452,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password_hash`, `role`, `created_at`, `token_version`, `is_active`) VALUES
-(2, 'admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$5RG6nZAFH753t4vGPU2Xgw$3oU5DaqW6JBnauCCcm1rAI8Z6fg5AD078fpZVAOZ3RQ', 'admin', '2026-10-28 14:48:30', 0, 1);
+(2, 'admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$5RG6nZAFH753t4vGPU2Xgw$3oU5DaqW6JBnauCCcm1rAI8Z6fg5AD078fpZVAOZ3RQ', 'admin', '2026-10-28 14:48:30', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -496,7 +604,7 @@ ALTER TABLE `employers`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -508,13 +616,13 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `resumes`
 --
 ALTER TABLE `resumes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `social_identities`

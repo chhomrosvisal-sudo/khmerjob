@@ -17,12 +17,15 @@ DEMO_JOBS = [
 ]
 
 
-def seed(session: Session):
-    for key, company, title, location, job_type, names, description in DEMO_JOBS:
+def seed(session: Session, jobs=None):
+    for key, company, title, location, job_type, names, description in (DEMO_JOBS if jobs is None else jobs):
         demo_key = f'initial-{key}'
         if session.scalar(select(Job).where(Job.demo_key == demo_key)):
             continue
         employer = session.scalar(select(Employer).where(Employer.demo_key == demo_key))
+        if employer is None and jobs is not None:
+            employer = session.scalar(select(Employer).where(
+                Employer.name == company, Employer.is_demo.is_(True)).order_by(Employer.id))
         if employer is None:
             employer = Employer(name=company, is_demo=True, demo_key=demo_key)
             session.add(employer)

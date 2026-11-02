@@ -1,5 +1,15 @@
 # Delivery status
 
+## Latest project repair pass
+
+See [PROJECT_FIXES.md](PROJECT_FIXES.md) for the current repairs, files, endpoints, and remaining scope. The latest full backend run passed **55 tests with no skips** after installing the declared scikit-learn/pandas/PyMuPDF dependencies. Frontend checks passed **25 UI tests**, **43 logic tests**, **5 Chromium workflows**, lint/build, and rendering checks. The live catalog still has **24 jobs**. Earlier counts and missing-package/browser limitations below are historical; unfinished roadmap modules and external service configuration remain open.
+
+## Admin dashboard milestone update
+
+The latest Milestone 0/1 audit and results are recorded in [ADMIN_DASHBOARD_MILESTONES.md](ADMIN_DASHBOARD_MILESTONES.md). The declared frontend test dependencies and Chromium are now installed locally, and the lockfile has been refreshed. Current checks passed: 47 backend tests (1 optional scikit-learn check skipped), 22 interactive UI tests, 4 real Chromium end-to-end tests, build/lint, route/admin rendering, and 39 multilingual rendering checks. The Chromium suite includes 1440px/768px/360px admin layouts, mobile navigation, persistent sign-in, and logout. A separate read-only FastAPI/MySQL check passed without changing existing records.
+
+Earlier checks and limitations below are historical; the old statements that UI/browser dependencies were unavailable and browser execution was pending are superseded by this update. SMTP, real OAuth providers, optional ML/PDF dependencies, reference-screenshot parity, and unfinished admin workflows are not claimed complete.
+
 The core local recruitment workflows are implemented. This document distinguishes executed checks from code that still needs its dependencies or external configuration. It is not a claim of 100% production readiness.
 
 ## Verified locally

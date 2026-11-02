@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { BriefcaseBusiness, Menu, X, ArrowUpRight, Bell } from 'lucide-react'
 
-export default function PublicHeader({ user, onSignOut, loggingOut }) {
+export default function PublicHeader({ user, onSignOut, loggingOut, unreadCount = 0 }) {
   const location = useLocation()
   const [openRoute, setOpenRoute] = useState(null)
   const routeKey = location.pathname + location.hash
@@ -17,11 +17,11 @@ export default function PublicHeader({ user, onSignOut, loggingOut }) {
       <div id="website-menu" className={`portal-navigation ${open ? 'is-open' : ''}`}>
         <nav aria-label={t("Website navigation")} lang={language} onClick={event => { if (event.target.closest('a')) setOpenRoute(null) }}>
           <NavLink end to="/">{t("Home")}</NavLink><NavLink to="/jobs">{t("Find Jobs")}</NavLink>
-          <Link to="/companies">{t("Companies")}</Link><Link to="/#categories">{t("Job Categories")}</Link><Link to="/#career-advice">{t("Career Advice")}</Link>
+          <NavLink to="/companies">{t("Companies")}</NavLink><NavLink to="/categories">{t("Job Categories")}</NavLink><NavLink to="/career-advice">{t("Career Advice")}</NavLink>
         </nav>
         <div className="portal-account"><LanguageSwitcher compact />
-          {user ? <><Link className="portal-login" to={user.role === 'admin' ? '/dashboard' : user.role === 'employer' ? '/employer/jobs' : '/account'}>{user.role === 'admin' ? t("Dashboard") : user.role === 'employer' ? t("My Jobs") : t("My Account")}</Link><button className="portal-signout" disabled={loggingOut} onClick={onSignOut}>{loggingOut ? t("Signing out…") : t("Sign out")}</button></> : <><Link className="portal-login" to="/login">{t("Login")}</Link><Link className="portal-register" to="/register">{t("Register")}</Link></>}
-          {user?.role === 'student' && <Link to="/account/notifications" aria-label={t("Application notifications")}><Bell size={16} /></Link>}
+          {user && <><Link className="portal-login" to={user.role === 'admin' ? '/dashboard' : user.role === 'employer' ? '/employer/jobs' : '/account'}>{user.role === 'admin' ? t("Dashboard") : user.role === 'employer' ? t("My Jobs") : t("My Account")}</Link><button className="portal-signout" disabled={loggingOut} onClick={onSignOut}>{loggingOut ? t("Signing out…") : t("Sign out")}</button></>}
+          {user && <Link to={user.role === 'student' ? '/account/notifications' : user.role === 'admin' ? '/dashboard/notifications' : '/notifications'} aria-label={t('Notifications')}><Bell size={16} />{unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}</Link>}
           <Link className="portal-employer" to={user ? '/employer/jobs' : '/login?portal=employer'}>{t("Employer Portal")}<ArrowUpRight size={14} /></Link>
         </div>
       </div>

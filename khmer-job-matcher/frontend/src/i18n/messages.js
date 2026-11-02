@@ -3367,5 +3367,153 @@ export const messages = {
   "Night mode": {
     "km": "ពេលយប់",
     "zh": "深色模式"
+  },
+  "Dashboard analytics": {
+    "km": "ការវិភាគផ្ទាំងគ្រប់គ្រង",
+    "zh": "仪表板分析"
+  },
+  "Start date": {
+    "km": "កាលបរិច្ឆេទចាប់ផ្តើម",
+    "zh": "开始日期"
+  },
+  "End date": {
+    "km": "កាលបរិច្ឆេទបញ្ចប់",
+    "zh": "结束日期"
+  },
+  "Reset": {
+    "km": "កំណត់ឡើងវិញ",
+    "zh": "重置"
+  },
+  "Refresh": {
+    "km": "ផ្ទុកឡើងវិញ",
+    "zh": "刷新"
+  },
+  "Export dashboard CSV": {
+    "km": "នាំចេញផ្ទាំងគ្រប់គ្រងជា CSV",
+    "zh": "导出仪表板 CSV"
+  },
+  "Approved companies": {
+    "km": "ក្រុមហ៊ុនដែលបានអនុម័ត",
+    "zh": "已批准的公司"
+  },
+  "Active jobs": {
+    "km": "ការងារដែលកំពុងបើក",
+    "zh": "有效职位"
+  },
+  "AI job matches": {
+    "km": "លទ្ធផលផ្គូផ្គងការងារ AI",
+    "zh": "AI 职位匹配"
+  },
+  "Pending employer approvals": {
+    "km": "និយោជករង់ចាំការអនុម័ត",
+    "zh": "待审批雇主"
+  },
+  "Pending job approvals": {
+    "km": "ការងាររង់ចាំការអនុម័ត",
+    "zh": "待审批职位"
+  },
+  "Not recorded yet": {
+    "km": "មិនទាន់បានកត់ត្រា",
+    "zh": "尚未记录"
+  },
+  "Monthly student registrations": {
+    "km": "ការចុះឈ្មោះនិស្សិតប្រចាំខែ",
+    "zh": "每月学生注册"
+  },
+  "Monthly job postings": {
+    "km": "ការប្រកាសការងារប្រចាំខែ",
+    "zh": "每月职位发布"
+  },
+  "Top 10 in-demand skills": {
+    "km": "ជំនាញដែលមានតម្រូវការខ្ពស់បំផុតទាំង ១០",
+    "zh": "需求最高的十项技能"
+  },
+  "View data": {
+    "km": "មើលទិន្នន័យ",
+    "zh": "查看数据"
+  },
+  "No records in this date range.": {
+    "km": "គ្មានទិន្នន័យក្នុងចន្លោះកាលបរិច្ឆេទនេះទេ។",
+    "zh": "此日期范围内没有记录。"
+  },
+  "Recent platform activities": {
+    "km": "សកម្មភាពថ្មីៗលើប្រព័ន្ធ",
+    "zh": "近期平台活动"
+  },
+  "How these metrics are calculated": {
+    "km": "របៀបគណនាសូចនាករទាំងនេះ",
+    "zh": "指标计算方法"
+  },
+  "Account registered": {
+    "km": "គណនីបានចុះឈ្មោះ",
+    "zh": "账户已注册"
+  },
+  "Job posted": {
+    "km": "ការងារបានប្រកាស",
+    "zh": "职位已发布"
+  },
+  "Application submitted": {
+    "km": "ពាក្យសុំបានដាក់",
+    "zh": "申请已提交"
+  },
+  "Confirm administrative action": {
+    "km": "បញ្ជាក់សកម្មភាពអ្នកគ្រប់គ្រង",
+    "zh": "确认管理操作"
+  },
+  "This changes account access or job visibility. Confirm that you want to continue.": {
+    "km": "សកម្មភាពនេះផ្លាស់ប្តូរសិទ្ធិចូលគណនី ឬការបង្ហាញការងារ។ សូមបញ្ជាក់ដើម្បីបន្ត។",
+    "zh": "此操作会更改账户访问权限或职位可见性。请确认是否继续。"
+  },
+  "Cancel": {
+    "km": "បោះបង់",
+    "zh": "取消"
+  },
+  "Confirm": {
+    "km": "បញ្ជាក់",
+    "zh": "确认"
+  },
+  "Your company publishing access has been approved.": {
+    "km": "សិទ្ធិប្រកាសការងាររបស់ក្រុមហ៊ុនអ្នកត្រូវបានអនុម័ត។",
+    "zh": "您的公司职位发布权限已获批准。"
+  },
+  "Your company publishing access has been suspended. Contact the administrator for details.": {
+    "km": "សិទ្ធិប្រកាសការងាររបស់ក្រុមហ៊ុនអ្នកត្រូវបានផ្អាក។ សូមទាក់ទងអ្នកគ្រប់គ្រងសម្រាប់ព័ត៌មានលម្អិត។",
+    "zh": "您的公司职位发布权限已暂停。请联系管理员了解详情。"
+  },
+  "Reactivate the employer account before approving publishing": {
+    "km": "សូមបើកគណនីនិយោជកឡើងវិញមុនអនុម័តសិទ្ធិប្រកាស",
+    "zh": "请先恢复雇主账户，再批准发布权限"
+  },
+  "Mark all as read": {
+    "km": "សម្គាល់ទាំងអស់ថាបានអាន",
+    "zh": "全部标为已读"
+  },
+  "Unread only": {
+    "km": "បង្ហាញតែសារមិនទាន់អាន",
+    "zh": "仅显示未读"
+  },
+  "Page {page}": {
+    "km": "ទំព័រ {page}",
+    "zh": "第 {page} 页"
+  },
+  "Registration, job, application and skill metrics use the selected creation dates.": {
+    "km": "សូចនាករចុះឈ្មោះ ការងារ ពាក្យសុំ និងជំនាញប្រើកាលបរិច្ឆេទបង្កើតដែលបានជ្រើសរើស។",
+    "zh": "注册、职位、申请和技能指标按所选创建日期统计。"
+  },
+  "Company approval and pending employer counts are current totals; approval means publishing access, not document verification.": {
+    "km": "ចំនួនក្រុមហ៊ុនបានអនុម័ត និងនិយោជករង់ចាំគឺជាចំនួនសរុបបច្ចុប្បន្ន។ ការអនុម័តមានន័យថាអនុញ្ញាតឱ្យប្រកាសការងារ មិនមែនការផ្ទៀងផ្ទាត់ឯកសារទេ។",
+    "zh": "已批准公司和待审批雇主为当前总数；批准表示拥有发布权限，并不表示文件已验证。"
+  },
+  "Active jobs require an active listing and approved employer. Demo records remain included and labeled in management pages.": {
+    "km": "ការងារដែលកំពុងបើកត្រូវមានប្រកាសសកម្ម និងនិយោជកបានអនុម័ត។ ទិន្នន័យសាកល្បងត្រូវបានរាប់បញ្ចូល និងសម្គាល់នៅទំព័រគ្រប់គ្រង។",
+    "zh": "有效职位需处于开放状态且雇主已获批准。演示记录仍计入，并在管理页面标注。"
+  },
+  "AI match history and job approval states are not stored yet; their counts are unavailable.": {
+    "km": "ប្រវត្តិផ្គូផ្គង AI និងស្ថានភាពអនុម័តការងារមិនទាន់ត្រូវបានរក្សាទុក ដូច្នេះមិនមានចំនួនទេ។",
+    "zh": "尚未存储 AI 匹配历史和职位审批状态，因此无法提供数量。"
+  },
+  "Recent activity shows record creation, not administrator audit history.": {
+    "km": "សកម្មភាពថ្មីៗបង្ហាញការបង្កើតទិន្នន័យ មិនមែនប្រវត្តិសវនកម្មអ្នកគ្រប់គ្រងទេ។",
+    "zh": "近期活动显示记录创建情况，并非管理员审计历史。"
   }
 }

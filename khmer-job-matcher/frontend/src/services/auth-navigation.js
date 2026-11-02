@@ -3,7 +3,7 @@ export function safeReturnPath(value) {
   try {
     const url = new URL(value, 'http://local.invalid')
     if (url.origin !== 'http://local.invalid') return '/dashboard'
-    const allowed = /^\/(dashboard|profile|matcher|settings)$/.test(url.pathname) || /^\/(smart-home|jobs|account)(?:\/|$)/.test(url.pathname) || /^\/employer\/jobs(?:\/|$)/.test(url.pathname)
+    const allowed = /^\/(profile|matcher|settings|notifications)$/.test(url.pathname) || /^\/(admin|dashboard|smart-home|jobs|account)(?:\/|$)/.test(url.pathname) || /^\/employer\/(jobs(?:\/.*)?|applications|company|analytics)$/.test(url.pathname)
     return allowed ? url.pathname + url.search + url.hash : '/dashboard'
   } catch { return '/dashboard' }
 }
@@ -18,7 +18,8 @@ export function postLoginPath(user, requested) {
   if (user?.role === 'admin') return '/dashboard'
   const next = safeReturnPath(requested)
   const path = new URL(next, 'http://local.invalid').pathname
-  if (user?.role === 'employer' && /^\/employer\/jobs(?:\/|$)/.test(path)) return next
+  if (user && path === '/notifications') return next
+  if (user?.role === 'employer' && /^\/employer\/(jobs(?:\/.*)?|applications|company|analytics)$/.test(path)) return next
   if (user?.role === 'student' && (/^\/(jobs|account)(?:\/|$)/.test(path) || ['/profile', '/matcher', '/settings'].includes(path))) return next
   return roleHome(user?.role)
 }

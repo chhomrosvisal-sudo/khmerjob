@@ -3,12 +3,14 @@ import { Bookmark, MapPin, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { coverage } from '../services/coverage'
 import OwnedJobActions from './jobs/OwnedJobActions'
+import JobPicture from './jobs/JobPicture'
 import { salaryLabel, postedLabel } from '../services/job-display'
 
 export default function JobCard({ job, skills, saved, toggle, canSave, pending, showCoverage, owned = false, onJobChanged }) {
   const { t, language } = useI18n()
   const result = coverage(job, skills)
   return <article className="card job-card">
+    <JobPicture job={job} />
     <div className="row">
       <span className="company-icon">{job.employer.name.slice(0, 1)}</span>
       {job.is_demo && <span className="badge">{t("Fictional demo listing")}</span>}

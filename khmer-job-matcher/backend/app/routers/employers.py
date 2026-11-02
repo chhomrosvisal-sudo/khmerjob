@@ -1,7 +1,7 @@
 from typing import Literal
 from fastapi import APIRouter, HTTPException, Query, Response
 from pydantic import Field, field_validator
-from sqlalchemy import select, func
+from sqlalchemy import select, func, or_
 from app.core.dependencies import Database, EmployerUser
 from app.models import Employer, Application, User, StudentProfile, Resume, Job, Notification
 from app.schemas.auth import StrictInput
@@ -52,20 +52,23 @@ def edit_company(payload: CompanyPatch, user: EmployerUser, db: Database):
 
 @router.get('/applications')
 def applicants(user: EmployerUser, db: Database, response: Response, page: int = Query(1, ge=1),
-               page_size: int = Query(12, ge=1, le=100), q: str = Query('', max_length=160), status: str = ''):
+               page_size: int = Query(12, ge=1, le=100), q: str = Query('', max_length=160),
+               status: Literal['', 'submitted', 'reviewing', 'shortlisted', 'accepted', 'rejected'] = ''):
     own = company(user, db)
     statement = select(Application, Job, User, StudentProfile).join(Job, Application.job_id == Job.id).join(
-        User, Application.user_id == User.id).join(StudentProfile, StudentProfile.user_id == User.id).where(Job.employer_id == own.id)
+        User, Application.user_id == User.id).outerjoin(StudentProfile, StudentProfile.user_id == User.id).where(Job.employer_id == own.id)
     if q.strip():
-        statement = statement.where(StudentProfile.name.contains(q.strip(), autoescape=True))
+        statement = statement.where(or_(StudentProfile.name.contains(q.strip(), autoescape=True),
+                                       User.email.contains(q.strip(), autoescape=True),
+                                       Job.title.contains(q.strip(), autoescape=True)))
     if status:
         statement = statement.where(Application.status == status)
     total = db.scalar(select(func.count()).select_from(statement.subquery()))
     rows = db.execute(statement.order_by(Application.id.desc()).offset((page - 1) * page_size).limit(page_size)).all()
     response.headers['Cache-Control'] = 'no-store'
     return {'items': [{'id': app.id, 'status': app.status, 'created_at': app.created_at, 'job_id': job.id, 'job_title': job.title,
-                      'applicant': {'name': profile.name, 'email': applicant.email, 'education': profile.education,
-                                    'experience': profile.experience}, 'has_resume': app.resume_id is not None,
+                      'applicant': {'name': profile.name if profile else '', 'email': applicant.email, 'education': profile.education if profile else '',
+                                    'experience': profile.experience if profile else ''}, 'has_resume': app.resume_id is not None,
                       'next_statuses': TRANSITIONS.get(app.status, [])} for app, job, applicant, profile in rows],
             'total': total, 'page': page, 'page_size': page_size}
 

@@ -57,7 +57,17 @@ def list_jobs(db: Database, user: OptionalUser, response: Response, q: str = Que
 
 
 @router.get('/jobs/{job_id}', response_model=JobOut)
-def job_detail(job_id: int, db: Database):
+def job_detail(job_id: int, db: Database, user: OptionalUser, response: Response):
+    job = load_job(job_id, db)
+    if not job.employer.approved and (user is None or (
+            user.role != 'admin' and not (user.role == 'employer' and job.employer.user_id == user.id))):
+        raise HTTPException(404, 'Job not found')
+    if user is not None:
+        response.headers['Cache-Control'] = 'no-store'
+    return job
+
+
+def load_job(job_id, db):
     job = db.scalar(select(Job).where(Job.id == job_id).options(
         joinedload(Job.employer), selectinload(Job.requirements).joinedload(JobSkill.skill)))
     if job is None:
@@ -90,7 +100,7 @@ def create_job(payload: JobCreate, user: EmployerUser, db: Database):
     job.requirements = [JobSkill(**item) for item in requirements]
     db.add(job)
     db.commit()
-    return job_detail(job.id, db)
+    return load_job(job.id, db)
 
 
 @router.patch('/jobs/{job_id}', response_model=JobOut)
@@ -111,7 +121,7 @@ def update_job(job_id: int, payload: JobPatch, user: EmployerUser, db: Database)
     if job.salary_min is not None and job.salary_max is not None and job.salary_max < job.salary_min:
         raise HTTPException(422, 'Maximum salary must be at least the minimum salary')
     db.commit()
-    return job_detail(job.id, db)
+    return load_job(job.id, db)
 
 
 from app.schemas.auth import StrictInput
@@ -130,4 +140,4 @@ def job_state(job_id: int, payload: JobState, user: EmployerUser, db: Database):
         raise HTTPException(403, 'Employer approval is required to reopen jobs')
     job.is_active = payload.is_active
     db.commit()
-    return job_detail(job.id, db)
+    return load_job(job.id, db)

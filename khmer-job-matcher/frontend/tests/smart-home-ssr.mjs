@@ -8,16 +8,32 @@ import { createServer } from 'vite'
 const server = await createServer({ cacheDir: 'node_modules/.vite-ssr-smoke', server: { middlewareMode: true }, appType: 'custom' })
 try {
   const { ApplicationRoutes } = await server.ssrLoadModule('/src/App.jsx')
-  for (const route of ['/', '/jobs', '/companies', '/login', '/register', '/employer-register', '/forgot-password', '/verify-code', '/reset-password', '/oauth/callback']) {
+  for (const route of ['/', '/jobs', '/companies', '/categories', '/career-advice', '/login', '/register', '/employer-register', '/forgot-password', '/verify-code', '/reset-password', '/oauth/callback']) {
     const html = renderToString(React.createElement(MemoryRouter, { initialEntries: [route] }, React.createElement(ApplicationRoutes)))
     assert.ok(html.includes('Khmer'))
-    assert.ok(html.includes(['/', '/jobs', '/companies'].includes(route) ? 'Website navigation' : 'au-card'))
+    assert.ok(html.includes(['/', '/jobs', '/companies', '/categories', '/career-advice'].includes(route) ? 'Website navigation' : 'au-card'))
     console.log('Rendered public route:', route)
+  }
+  // Stored credentials must not expose dashboard content until /me verifies the role.
+  const { AuthProvider } = await server.ssrLoadModule('/src/hooks/AuthContext.jsx')
+  const originalStorage = Object.getOwnPropertyDescriptor(globalThis, 'localStorage')
+  try {
+    Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: {
+      getItem: () => JSON.stringify({ token: 'test-saved-token', expiresAt: Date.now() + 60000, user: { role: 'admin' } }),
+      removeItem() {},
+    } })
+    const restored = renderToString(React.createElement(AuthProvider, null, React.createElement('p', null, 'Private dashboard content')))
+    assert.ok(restored.includes('Restoring your session'))
+    assert.ok(!restored.includes('Private dashboard content'))
+    console.log('Stored session waits for backend verification before mounting private pages.')
+  } finally {
+    if (originalStorage) Object.defineProperty(globalThis, 'localStorage', originalStorage)
+    else delete globalThis.localStorage
   }
   const { AuthContext } = await server.ssrLoadModule('/src/hooks/auth-context.js')
   const cardProps = { skills: [], savedIds: [], pendingIds: [], canSave: true, savedLoading: false, showCoverage: false, toggle: () => {} }
   for (const [file, path, role] of [
-    ['AdminDashboard', '/dashboard', 'admin'], ['EmployerDashboard', '/employer/company', 'employer'],
+    ...['', '/users', '/companies', '/students', '/employers', '/approvals', '/jobs', '/applications', '/skills', '/matching', '/reports', '/notifications'].map(suffix => ['AdminDashboard', '/dashboard' + suffix, 'admin']), ['EmployerDashboard', '/employer/company', 'employer'],
     ['EmployerDashboard', '/employer/applications', 'employer'], ['EmployerDashboard', '/employer/analytics', 'employer'],
     ...['', '/profile', '/resumes', '/recommendations', '/notifications'].map(suffix => ['Account', '/account' + suffix, 'student']),
   ]) {
