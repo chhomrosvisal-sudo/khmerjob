@@ -1570,7 +1570,7 @@ export const messages = {
   },
   "Sokha Chan": {
     "km": "សុខា ចាន់",
-    "zh": "Sokha Chan"
+    "zh": "索卡·占"
   },
   "Interests": {
     "km": "ចំណាប់អារម្មណ៍",

@@ -10,7 +10,7 @@ try {
   const { ApplicationRoutes } = await server.ssrLoadModule('/src/App.jsx')
   for (const route of ['/', '/jobs', '/companies', '/categories', '/career-advice', '/login', '/register', '/employer-register', '/forgot-password', '/verify-code', '/reset-password', '/oauth/callback']) {
     const html = renderToString(React.createElement(MemoryRouter, { initialEntries: [route] }, React.createElement(ApplicationRoutes)))
-    assert.ok(html.includes('Khmer'))
+    assert.ok(html.includes('value="km"') && html.includes('value="zh"') && html.includes('value="en"'), `${route} language selector`)
     assert.ok(html.includes(['/', '/jobs', '/companies', '/categories', '/career-advice'].includes(route) ? 'Website navigation' : 'au-card'))
     console.log('Rendered public route:', route)
   }

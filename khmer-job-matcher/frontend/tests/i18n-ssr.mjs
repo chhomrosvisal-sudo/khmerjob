@@ -14,7 +14,7 @@ try {
   const { default: JobCard } = await server.ssrLoadModule('/src/components/JobCard.jsx')
   for (const language of ['en', 'km', 'zh']) {
     for (const [route, heading] of [['/', 'Find Your Dream Job in Cambodia'], ['/jobs', 'Find your next opportunity'],
-      ['/companies', 'Companies in Cambodia'], ['/login', 'Login'], ['/register', 'Sign up'],
+      ['/companies', 'Companies in Cambodia'], ['/login', 'Login'], ['/register', 'Create your account'],
       ['/employer-register', 'Employer sign up'], ['/forgot-password', 'Forgot your password?']]) {
       const html = renderToString(React.createElement(MemoryRouter, { initialEntries: [route] }, React.createElement(ApplicationRoutes, { initialLanguage: language })))
       assert.ok(html.includes(translate(language, heading)), `${language} ${route}`)
