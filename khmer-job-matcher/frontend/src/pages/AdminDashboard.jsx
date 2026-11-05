@@ -12,8 +12,11 @@ import Notifications from './Notifications'
 import AdminApplications from '../components/admin/AdminApplications'
 import DashboardAnalytics from '../components/admin/DashboardAnalytics'
 import ConfirmDialog from '../components/admin/ConfirmDialog'
+import AdminInsights from '../components/admin/AdminInsights'
 
 const views = {
+  'skill-gaps': ['Skill Gap Analytics', 'Compare job requirements with recorded profile skills.'],
+  'activity-logs': ['Activity Logs', 'Review recorded administrator changes.'],
   overview: ['Recruitment overview', 'A clear view of your recruitment community.'],
   users: ['User management', 'Manage account access across your platform.'],
   companies: ['Company approvals', 'Review employers and manage their publishing access.'],
@@ -80,6 +83,7 @@ export default function AdminDashboard() {
     <div className="admin-breadcrumb">{t('Workspace')}<span>/</span>{t(title)}</div>
     <div className="admin-page-heading"><div><span className="eyebrow">{t('ADMIN WORKSPACE')}</span><h1>{t(title)}</h1><p>{t(description)}</p></div><div className="admin-heading-actions"><button aria-label={t('Refresh dashboard')} onClick={() => { overview.reload(); table.reload(); approvals.reload(); setModelRevision(value => value + 1) }}><RefreshCw size={16} /></button><button className="primary" disabled={exporting} onClick={exportReport}><Download size={16} />{t(exporting ? 'Downloading...' : 'Export report')}</button></div></div>
     {error && <p className="notice error" role="alert">{t(error)}</p>}{message && <p className="notice" role="status">{t(message)}</p>}
+    {['skill-gaps', 'activity-logs'].includes(view) && <AdminInsights activity={view === 'activity-logs'} revision={modelRevision} />}
     {view === 'overview' && <>
       <DashboardAnalytics revision={modelRevision} />
       <ResourceState resource={overview}>{overview.data && <>

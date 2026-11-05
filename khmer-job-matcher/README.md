@@ -1,6 +1,6 @@
 # Khmer Job & Skills Matcher
 
-Latest admin work: see the [Milestone 0 audit and Milestone 1 implementation/checks](docs/ADMIN_DASHBOARD_MILESTONES.md). Applications now has a real admin search/filter/pagination page; Skill Gap Analytics and Activity Logs remain future milestones.
+Current verification: see [release checks](docs/RELEASE_CHECKS.md). Applications, aggregate Skill Gap Analytics and persistent administrator Activity Logs are available. Earlier milestone documents are historical snapshots.
 
 A Cambodian recruitment portal with a React/Vite frontend, FastAPI API, and MySQL storage. The public website, job-seeker accounts, employer workspace, and administrator dashboard share one authentication system. Fictional sample employers and vacancies are clearly labeled.
 
@@ -39,7 +39,7 @@ Use the shared language selector to switch between **English**, **Khmer**, and *
 - Admin statistics, user activation/deactivation, employer approvals, job moderation, searchable paginated tables, skill creation, and CSV summary export.
 - Five connected authentication screens with field validation, password visibility/strength, OTP controls, loading/errors, and disabled social-provider buttons. Real SMTP recovery endpoints are implemented; delivery is intentionally not configured yet.
 
-**Not a claim of 100% production readiness:** some dependency-backed paths and browser checks cannot run in this environment. See [release checks](docs/RELEASE_CHECKS.md) for the remaining verified limitations. Earlier implementation notes are preserved in [implementation history](docs/IMPLEMENTATION_HISTORY.md).
+**Not a claim of 100% production readiness:** local automated checks do not certify external services, recommendation quality or production deployment. See [release checks](docs/RELEASE_CHECKS.md) for the remaining verified limitations. Earlier implementation notes are preserved in [implementation history](docs/IMPLEMENTATION_HISTORY.md).
 
 ## Local setup (Windows PowerShell)
 
@@ -65,7 +65,7 @@ For a fresh setup, configure `DATABASE_URL`, `FRONTEND_ORIGIN=http://localhost:5
 .\venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-Migrations are additive through `0005`. They preserve existing rows. The seed adds four fictional jobs and nine skills, skips existing demo keys, and creates no login accounts.
+Migrations are additive through `0006`. They preserve existing rows. The seed adds four fictional jobs and nine skills, skips existing demo keys, and creates no login accounts.
 
 In another terminal:
 
@@ -84,7 +84,7 @@ After installation/migrations, the convenience helper can start missing servers 
 .\scripts\Start-Local.ps1
 ```
 
-It stores logs in ignored `.local-run/`, does not install/migrate/reset anything, and never changes Windows security settings. Its syntax is checked; its process-launch branch has not been exercised here. If scripts are blocked, use the separate commands above.
+It stores logs in ignored `.local-run/`, does not install/migrate/reset anything, and never changes Windows security settings. PowerShell may block script execution; use the separate server commands below when that happens. Use `npm.cmd` instead of `npm` if `npm.ps1` is blocked. If scripts are blocked, use the separate commands above.
 
 ### Create privileged accounts
 
@@ -136,7 +136,7 @@ Add your provider app credentials privately to `backend/.env`, register the exac
 ## Resume handling
 
 - PDF and UTF-8 `.txt`, maximum 5 MB, ten retained versions per account.
-- Text uploads work with the current environment. PDFs need **PyMuPDF**, declared in requirements but not installed here due blocked package access. Unsupported PDF parsing returns an explicit error.
+- Text and PDF resume paths are covered by the current test suite. **PyMuPDF** is installed locally and declared in requirements. Unsupported PDF parsing returns an explicit error.
 - PDF content is parsed, not trusted from its extension. Encrypted/overlong PDFs are rejected; textless scanned PDFs report that OCR is unsupported.
 - Files are private database records, not publicly hosted URLs. Small chunks support XAMPP's default 1 MB packet limit without global server changes. Existing single-blob records remain readable.
 - Applications attach the latest immutable version when the applicant chooses to include it. Another upload does not replace an existing application's attachment. Deleting a version removes access from previous applications.
@@ -149,14 +149,7 @@ The job matcher now trains and saves a TF-IDF catalog model. Only approved, open
 
 Score = **65% required-skill coverage + 25% TF-IDF cosine similarity + 5% preferred location + 5% preferred category**. Scores estimate compatibility, not hiring probability. `/account/recommendations` shows matched/missing skills, weighted points, filters, pagination, and actual model metadata. Administrators can inspect and retrain the model from `/dashboard`.
 
-The current local model uses the built-in TF-IDF engine: four sample jobs, 990 learned character features. Package downloads are blocked here, so the implemented scikit-learn training branch and its optional parity test could not execute. Install dependencies in a network-enabled terminal to enable it:
-
-```powershell
-cd backend
-.\venv\Scripts\python.exe -m pip install -r requirements.txt
-.\venv\Scripts\python.exe -m app.ml.train --engine sklearn
-# Restart FastAPI after installation.
-```
+The local environment has scikit-learn, pandas and PyMuPDF installed; the scikit-learn and PDF branches pass their automated tests. Catalog content can change, so model job/feature counts should be read from the model status endpoint rather than hardcoded documentation.
 
 See [the machine learning guide](docs/MACHINE_LEARNING.md) for training, configuration, architecture, API endpoints, evaluation, and limitations. A synthetic two-profile evaluation ran successfully; it is a sanity check, not a real-world accuracy benchmark.
 
@@ -244,4 +237,4 @@ Successful password and social sign-in saves the access token and its expiry in 
 
 The existing access-token lifetime still applies (`ACCESS_TOKEN_MINUTES`, default 30 minutes); there is no refresh-token renewal. Browser storage restrictions fall back to a session for the current visit. `Remember me` controls the saved email only. Session helper checks run as part of `npm test`; route rendering also checks that unverified stored credentials do not mount private content.
 
-The admin sidebar groups navigation under Overview, Management, AI & Analytics, and System. Students filters accounts to the student role; Employers lists companies; Approvals shows pending employers. Skills Management includes the searchable skill catalog and creation form, separate from AI Job Matching. Reports shows current totals and exports the existing CSV summary. Notifications uses the signed-in administrator's notification inbox. Applications, Skill Gap Analytics, and Activity Logs are visibly marked Coming soon and disabled until their admin workflows are implemented.
+The admin sidebar groups navigation under Overview, Management, AI & Analytics, and System. Students filters accounts to the student role; Employers lists companies; Approvals shows pending employers. Skills Management includes the searchable skill catalog and creation form, separate from AI Job Matching. Reports shows current totals and exports the existing CSV summary. Notifications uses the signed-in administrator's notification inbox. Applications supports search, status filters and pagination. Skill Gap Analytics compares required job skills with active job-seeker profiles and excludes demo jobs by default. Activity Logs records administrator changes from migration `0006` onward, with action filters and pagination.

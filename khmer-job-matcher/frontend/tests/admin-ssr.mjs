@@ -63,7 +63,7 @@ try {
   const { default: AdminNavigation } = await server.ssrLoadModule('/src/components/layout/AdminNavigation.jsx')
   const navigation = renderToString(React.createElement(MemoryRouter, { initialEntries: ['/dashboard/students'] }, React.createElement(AdminNavigation)))
   for (const label of ['OVERVIEW', 'MANAGEMENT', 'AI &amp; ANALYTICS', 'SYSTEM', 'Students', 'Employers', 'Job Listings', 'Applications', 'Approvals', 'Skills Management', 'AI Job Matching', 'Skill Gap Analytics', 'Reports', 'Notifications', 'Activity Logs', 'Settings']) assert.ok(navigation.includes(label), label)
-  assert.equal((navigation.match(/disabled=""/g) || []).length, 2)
+  assert.equal((navigation.match(/disabled=""/g) || []).length, 0)
   assert.match(navigation, /aria-current="page"[^>]*href="\/dashboard\/students"/)
   state.empty = true
   assert.match(render('/dashboard'), /No employer accounts are waiting for approval/)

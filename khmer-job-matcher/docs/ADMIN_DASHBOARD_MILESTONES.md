@@ -1,3 +1,5 @@
+> Historical implementation record. Current dependency, feature and verification status is maintained in [RELEASE_CHECKS.md](RELEASE_CHECKS.md). Skill Gap Analytics and Activity Logs are now available; older statements below describe their status at that milestone.
+
 # Admin dashboard audit and milestones
 
 Latest repair status: [PROJECT_FIXES.md](PROJECT_FIXES.md) supersedes earlier test/dependency/browser limits below. It adds admin route aliases, confirmation dialogs, localized analytics, notification counts/filtering/bulk-read and ownership/approval fixes. Matching-history, job-approval and audit models remain unimplemented.

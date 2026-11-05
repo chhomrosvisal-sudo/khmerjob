@@ -33,6 +33,26 @@ function mount(path, api) {
 }
 
 describe('live admin dashboard controls', () => {
+  it('loads aggregate skill gaps and can include demo jobs', async () => {
+    const api = vi.fn(async path => path === '/api/admin/overview' ? overview : {
+      students: 2, jobs: 1, items: [{ skill_id: 1, name: 'Python', jobs_requiring: 1,
+        students_with_skill: 1, students_missing_skill: 1, coverage_percent: 50 }],
+    })
+    mount('/dashboard/skill-gaps', api)
+    expect(await screen.findByText('50%')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Include fictional demo jobs' }))
+    await waitFor(() => expect(api.mock.calls.some(([path]) => path.includes('include_demo=true'))).toBe(true))
+  })
+
+  it('filters recorded administrator activity and handles an empty result', async () => {
+    const api = vi.fn(async path => path === '/api/admin/overview' ? overview : { items: [], total: 0 })
+    mount('/dashboard/activity-logs', api)
+    expect(await screen.findByText('No administrator changes recorded for this filter.')).toBeInTheDocument()
+    fireEvent.change(screen.getByRole('combobox', { name: 'Action' }), { target: { value: 'skill.created' } })
+    await waitFor(() => expect(api.mock.calls.some(([path]) => path.includes('action=skill.created'))).toBe(true))
+    expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled()
+  })
+
   it('renders API counts and links each statistic to its management section', async () => {
     const api = vi.fn(async path => path === '/api/admin/overview'
       ? overview : { items: [], total: 0 })
@@ -127,10 +147,10 @@ describe('live admin dashboard controls', () => {
     expect(screen.queryByRole('heading', { name: 'Recruitment overview' })).not.toBeInTheDocument()
   })
 
-  it('connects Applications and explicitly disables the two unfinished workflows', () => {
+  it('connects Applications, Skill Gap Analytics and Activity Logs', () => {
     render(<MemoryRouter initialEntries={['/dashboard/applications']}><AdminNavigation /></MemoryRouter>)
     expect(screen.getByRole('link', { name: 'Applications', exact: true })).toHaveAttribute('aria-current', 'page')
-    expect(screen.getByRole('button', { name: 'Skill Gap Analytics - Coming soon' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Activity Logs - Coming soon' })).toBeDisabled()
+    expect(screen.getByRole('link', { name: 'Skill Gap Analytics', exact: true })).toHaveAttribute('href', '/dashboard/skill-gaps')
+    expect(screen.getByRole('link', { name: 'Activity Logs', exact: true })).toHaveAttribute('href', '/dashboard/activity-logs')
   })
 })

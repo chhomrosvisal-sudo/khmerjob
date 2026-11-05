@@ -1,3 +1,5 @@
+> Historical implementation record. Current dependency, feature and verification status is maintained in [RELEASE_CHECKS.md](RELEASE_CHECKS.md). Skill Gap Analytics and Activity Logs are now available; older statements below describe their status at that milestone.
+
 # Job recommendation model
 
 This is an unsupervised text model with an explainable hybrid ranking formula. It does not predict employment outcomes or learn from application acceptance decisions.

@@ -1,3 +1,5 @@
+> Historical implementation record. Current dependency, feature and verification status is maintained in [RELEASE_CHECKS.md](RELEASE_CHECKS.md). Skill Gap Analytics and Activity Logs are now available; older statements below describe their status at that milestone.
+
 # Khmer Job & Skills Matcher
 
 React frontend with FastAPI authentication, MySQL-backed student profiles and saved jobs, job browsing, and employer job management. Fictional seeded jobs are explicitly labeled. Only navigation language is saved in browser storage; access tokens stay in memory.

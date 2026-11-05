@@ -201,6 +201,11 @@ Phone Number	លេខទូរស័ព្ទ	电话号码
 Confirm Password	បញ្ជាក់ពាក្យសម្ងាត់	确认密码
 Create Password|Create a password	បង្កើតពាក្យសម្ងាត់	创建密码
 Create Account	បង្កើតគណនី	创建账户
+Create your account	បង្កើតគណនីរបស់អ្នក	创建您的账户
+Username	ឈ្មោះអ្នកប្រើប្រាស់	用户名
+Have an account?	មានគណនីហើយឬ?	已有账户？
+user_name	ឈ្មោះអ្នកប្រើប្រាស់	用户名
+user_email	អ៊ីមែល	电子邮箱
 I agree to the	ខ្ញុំយល់ព្រមតាម	我同意
 and	និង	和
 Creating account…	កំពុងបង្កើតគណនី…	正在创建账户…
@@ -347,6 +352,8 @@ Browse opportunities, review the requirements, and apply from the job details pa
 Explore jobs	ស្វែងរកឱកាសការងារ	探索职位
 Your education, interests, and skills are saved to your account.	ការអប់រំ ចំណាប់អារម្មណ៍ និងជំនាញត្រូវបានរក្សាទុកក្នុងគណនី។	教育、兴趣和技能保存在您的账户中。
 Name	ឈ្មោះ	姓名
+Account created. Log in to find a job.	គណនីបានបង្កើតរួច។ សូមចូលគណនីដើម្បីរកការងារ។	账户已创建。请登录以查找工作。
+Sokha Chan	សុខា ចាន់	Sokha Chan
 Interests	ចំណាប់អារម្មណ៍	兴趣
 Experience	បទពិសោធន៍	经验
 Projects, internships, or work experience	គម្រោង កម្មសិក្សា ឬបទពិសោធន៍ការងារ	项目、实习或工作经验
@@ -819,3 +826,22 @@ Company approval and pending employer counts are current totals; approval means 
 Active jobs require an active listing and approved employer. Demo records remain included and labeled in management pages.	ការងារដែលកំពុងបើកត្រូវមានប្រកាសសកម្ម និងនិយោជកបានអនុម័ត។ ទិន្នន័យសាកល្បងត្រូវបានរាប់បញ្ចូល និងសម្គាល់នៅទំព័រគ្រប់គ្រង។	有效职位需处于开放状态且雇主已获批准。演示记录仍计入，并在管理页面标注。
 AI match history and job approval states are not stored yet; their counts are unavailable.	ប្រវត្តិផ្គូផ្គង AI និងស្ថានភាពអនុម័តការងារមិនទាន់ត្រូវបានរក្សាទុក ដូច្នេះមិនមានចំនួនទេ។	尚未存储 AI 匹配历史和职位审批状态，因此无法提供数量。
 Recent activity shows record creation, not administrator audit history.	សកម្មភាពថ្មីៗបង្ហាញការបង្កើតទិន្នន័យ មិនមែនប្រវត្តិសវនកម្មអ្នកគ្រប់គ្រងទេ។	近期活动显示记录创建情况，并非管理员审计历史。
+Compare job requirements with recorded profile skills.	ប្រៀបធៀបជំនាញដែលការងារត្រូវការជាមួយជំនាញក្នុងប្រវត្តិរូប។	比较职位要求与档案中记录的技能。
+Review recorded administrator changes.	ពិនិត្យការផ្លាស់ប្តូរដែលបានកត់ត្រារបស់អ្នកគ្រប់គ្រង។	查看已记录的管理员更改。
+Administrator changes recorded from this release onward. Earlier actions are not reconstructed.	ការផ្លាស់ប្តូររបស់អ្នកគ្រប់គ្រងត្រូវបានកត់ត្រាចាប់ពីកំណែនេះ។ សកម្មភាពមុនៗមិនត្រូវបានបង្កើតឡើងវិញទេ។	从此版本开始记录管理员更改，不重建之前的操作。
+Required skills in open jobs from approved employers, compared with active job-seeker profiles. Missing a skill does not imply interest in that job or inability to do it.	ជំនាញដែលការងារបើកទទួលរបស់និយោជកដែលបានអនុម័តត្រូវការ ធៀបនឹងប្រវត្តិរូបអ្នកស្វែងរកការងារសកម្ម។ កង្វះជំនាញមិនបញ្ជាក់ពីចំណាប់អារម្មណ៍ ឬអសមត្ថភាពក្នុងការងារនោះទេ។	比较已获批准雇主的开放职位所需技能与活跃求职者档案。缺少技能不代表对此职位有兴趣或无法胜任。
+Include fictional demo jobs	រួមបញ្ចូលការងារសាកល្បងប្រឌិត	包含虚构演示职位
+No administrator changes recorded for this filter.	គ្មានការផ្លាស់ប្តូររបស់អ្នកគ្រប់គ្រងសម្រាប់តម្រងនេះទេ។	此筛选条件下没有管理员更改记录。
+No required skills found for the selected jobs.	រកមិនឃើញជំនាញដែលត្រូវការសម្រាប់ការងារដែលបានជ្រើសរើសទេ។	所选职位没有所需技能记录。
+Jobs requiring skill	ការងារដែលត្រូវការជំនាញ	需要此技能的职位
+Profiles with skill	ប្រវត្តិរូបដែលមានជំនាញ	具备此技能的档案
+Profiles missing skill	ប្រវត្តិរូបដែលខ្វះជំនាញ	缺少此技能的档案
+Administrator ID	លេខសម្គាល់អ្នកគ្រប់គ្រង	管理员编号
+All actions	សកម្មភាពទាំងអស់	所有操作
+No profiles	គ្មានប្រវត្តិរូប	没有档案
+Deleted account	គណនីដែលបានលុប	已删除账户
+Profiles	ប្រវត្តិរូប	档案
+Record	កំណត់ត្រា	记录
+Changes	ការផ្លាស់ប្តូរ	更改
+Coverage	ការគ្របដណ្តប់	覆盖率
+Action	សកម្មភាព	操作

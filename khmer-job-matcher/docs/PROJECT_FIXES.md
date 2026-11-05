@@ -1,3 +1,5 @@
+> Historical implementation record. Current dependency, feature and verification status is maintained in [RELEASE_CHECKS.md](RELEASE_CHECKS.md). Skill Gap Analytics and Activity Logs are now available; older statements below describe their status at that milestone.
+
 # Project repair pass — 2026-10-28
 
 This pass audits and repairs the existing application. It preserves the current UI, authentication architecture, uncommitted work, database schema, and 24 live job listings. It does not certify that every feature in the original admin roadmap is implemented.

@@ -24,11 +24,12 @@ if (!(Test-LocalHttp 'http://127.0.0.1:8000/api/health')) {
 
 if (!(Test-LocalHttp 'http://localhost:5173')) {
     $nodeCommand = Get-Command node.exe -ErrorAction SilentlyContinue
-    $runtimePath = if ($nodeCommand) { $nodeCommand.Source } else { Join-Path $env:LOCALAPPDATA 'Programs/Microsoft VS Code/Code.exe' }
+    $portableNode = Join-Path $projectRoot '.local-run/tooling/node-v22.23.4-win-x64/node.exe'
+    $runtimePath = if ($nodeCommand) { $nodeCommand.Source } elseif (Test-Path -LiteralPath $portableNode) { $portableNode } else { Join-Path $env:LOCALAPPDATA 'Programs/Microsoft VS Code/Code.exe' }
     if (!(Test-Path -LiteralPath $runtimePath)) { throw 'Install Node.js LTS with npm, then reopen your terminal.' }
     $previousElectronMode = $env:ELECTRON_RUN_AS_NODE
     try {
-        if (!$nodeCommand) { $env:ELECTRON_RUN_AS_NODE = '1' }
+        if ($runtimePath -like '*Code.exe') { $env:ELECTRON_RUN_AS_NODE = '1' }
         Start-Process -FilePath $runtimePath -ArgumentList @('node_modules/vite/bin/vite.js', '--host', 'localhost', '--port', '5173', '--strictPort') -WorkingDirectory $frontendDirectory -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logDirectory 'frontend.log') -RedirectStandardError (Join-Path $logDirectory 'frontend-error.log') | Out-Null
     } finally { $env:ELECTRON_RUN_AS_NODE = $previousElectronMode }
 }

@@ -1,5 +1,35 @@
 import { test, expect } from '@playwright/test'
 
+test('administrator sees real skill aggregates and a persisted moderation log', async ({ page }) => {
+  await page.goto('/login')
+  await page.getByLabel('Email', { exact: true }).fill(process.env.E2E_ADMIN_EMAIL)
+  await page.getByLabel('Password', { exact: true }).fill(process.env.E2E_ADMIN_PASSWORD)
+  await page.getByRole('button', { name: 'Login', exact: true }).click()
+  await expect(page).toHaveURL(/\/dashboard$/)
+  await page.goto('/dashboard/skill-gaps')
+  await page.getByRole('checkbox', { name: 'Include fictional demo jobs' }).check()
+  await expect(page.getByRole('table')).toBeVisible()
+  await page.goto('/dashboard/jobs')
+  await page.getByRole('button', { name: 'Archive listing', exact: true }).first().click()
+  await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+  await expect(page.getByText('Change saved.', { exact: true })).toBeVisible()
+  await page.goto('/dashboard/activity-logs')
+  await page.getByRole('combobox', { name: 'Action', exact: true }).selectOption('job.access_changed')
+  await expect(page.getByRole('table')).toBeVisible()
+  await expect(page.getByRole('cell', { name: 'job.access_changed', exact: true }).first()).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole('table')).toBeVisible()
+  for (const width of [1440, 768, 360]) {
+    await page.setViewportSize({ width, height: 900 })
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  }
+  // Restore the listing so this shared isolated catalog remains usable by other workflows.
+  await page.goto('/dashboard/jobs')
+  await page.getByRole('button', { name: 'Restore listing', exact: true }).first().click()
+  await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+  await expect(page.getByText('Change saved.', { exact: true })).toBeVisible()
+})
+
 test('guest dashboard requires login and mobile homepage has no horizontal overflow', async ({ page }) => {
   await page.goto('/dashboard')
   await expect(page).toHaveURL(/\/login\?next=/)

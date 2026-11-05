@@ -3,7 +3,7 @@ import os
 
 os.environ['DATABASE_URL'] = 'sqlite://'
 os.environ['FRONTEND_ORIGIN'] = 'http://localhost:5173'
-os.environ['JWT_SECRET'] = 'test-only-secret-not-for-deployment-1234567890'
+os.environ['JWT_SECRET'] = 'test-only-secret-not-for-deployment-1234567890-extended-for-hs384'
 os.environ['RATE_LIMIT_ENABLED'] = 'false'
 
 import pytest

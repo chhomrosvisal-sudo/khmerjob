@@ -14,12 +14,12 @@ export const adminNavigation = [
   { label: 'AI & ANALYTICS', items: [
     { label: 'Skills Management', path: '/dashboard/skills', icon: Tags },
     { label: 'AI Job Matching', path: '/dashboard/matching', icon: Sparkles },
-    { label: 'Skill Gap Analytics', icon: ChartNoAxesCombined },
+    { label: 'Skill Gap Analytics', path: '/dashboard/skill-gaps', icon: ChartNoAxesCombined },
     { label: 'Reports', path: '/dashboard/reports', icon: FileBarChart2 },
   ] },
   { label: 'SYSTEM', items: [
     { label: 'Notifications', path: '/dashboard/notifications', icon: Bell },
-    { label: 'Activity Logs', icon: History },
+    { label: 'Activity Logs', path: '/dashboard/activity-logs', icon: History },
     { label: 'Settings', path: '/settings', icon: Settings },
   ] },
 ]

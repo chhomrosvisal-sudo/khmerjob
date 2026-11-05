@@ -4,7 +4,7 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.exc import IntegrityError
 
 from app.core.dependencies import AdminUser, Database
-from app.models import Skill, User, Employer, Job, Application, StudentProfile, Notification
+from app.models import Skill, User, Employer, Job, Application, StudentProfile, Notification, AdminActivity, StudentSkill, JobSkill
 from app.schemas.admin import AdminApplicationPage, AdminOverview, ApplicationStatus, DashboardAnalytics
 from app.schemas.auth import StrictInput, UserOut
 from app.schemas.jobs import SkillOut
@@ -14,6 +14,54 @@ from datetime import date
 from app.services.admin_dashboard import dashboard_data
 
 router = APIRouter(prefix='/api/admin', tags=['admin'])
+
+
+def audit(db, actor, action, target_type, target_id, changes):
+    db.add(AdminActivity(actor_id=actor.id, action=action, target_type=target_type,
+                         target_id=target_id, changes=changes))
+
+
+@router.get('/activity-logs')
+def activity_logs(user: AdminUser, db: Database, response: Response,
+                  page: int = Query(1, ge=1), page_size: int = Query(20, ge=1, le=100),
+                  action: str = Query('', max_length=60), actor_id: int | None = Query(None, ge=1)):
+    response.headers['Cache-Control'] = 'no-store'
+    statement = select(AdminActivity)
+    if action:
+        statement = statement.where(AdminActivity.action == action)
+    if actor_id is not None:
+        statement = statement.where(AdminActivity.actor_id == actor_id)
+    total = db.scalar(select(func.count()).select_from(statement.subquery()))
+    rows = db.scalars(statement.order_by(AdminActivity.created_at.desc(), AdminActivity.id.desc())
+                      .offset((page - 1) * page_size).limit(page_size)).all()
+    return {'items': [{'id': row.id, 'actor_id': row.actor_id, 'action': row.action,
+                       'target_type': row.target_type, 'target_id': row.target_id,
+                       'changes': row.changes, 'created_at': row.created_at} for row in rows],
+            'total': total, 'page': page, 'page_size': page_size}
+
+
+@router.get('/skill-gaps')
+def skill_gaps(user: AdminUser, db: Database, response: Response, include_demo: bool = False):
+    response.headers['Cache-Control'] = 'no-store'
+    # Include active job seekers with a profile; never expose individual profiles.
+    eligible = select(StudentProfile.id).join(User).where(User.role == 'student', User.is_active.is_(True))
+    students = db.scalar(select(func.count()).select_from(eligible.subquery()))
+    supply = dict(db.execute(select(StudentSkill.skill_id, func.count())
+                  .where(StudentSkill.student_id.in_(eligible)).group_by(StudentSkill.skill_id)).all())
+    conditions = [Job.is_active.is_(True), Employer.approved.is_(True)]
+    if not include_demo:
+        conditions.append(Job.is_demo.is_(False))
+    jobs = db.scalar(select(func.count()).select_from(Job).join(Employer).where(*conditions))
+    rows = db.execute(select(Skill.id, Skill.name, func.count(JobSkill.job_id))
+                      .join(JobSkill).join(Job).join(Employer)
+                      .where(*conditions, JobSkill.required.is_(True))
+                      .group_by(Skill.id, Skill.name).order_by(func.count(JobSkill.job_id).desc(), Skill.name)).all()
+    return {'students': students, 'jobs': jobs, 'include_demo': include_demo,
+            'items': [{'skill_id': skill_id, 'name': name, 'jobs_requiring': demand,
+                       'students_with_skill': supply.get(skill_id, 0),
+                       'students_missing_skill': students - supply.get(skill_id, 0),
+                       'coverage_percent': round(100 * supply.get(skill_id, 0) / students, 1) if students else None}
+                      for skill_id, name, demand in rows]}
 
 
 @router.get('/dashboard', response_model=DashboardAnalytics)
@@ -146,12 +194,14 @@ def user_state(user_id: int, payload: ActivePatch, user: AdminUser, db: Database
         raise HTTPException(409, 'You cannot disable your own admin account')
     if item.role == 'admin' and not payload.is_active:
         raise HTTPException(409, 'Administrator accounts are managed by the database operator')
+    before = item.is_active
     item.is_active = payload.is_active
     item.token_version += 1
     if item.role == 'employer' and not payload.is_active:
         employer = db.scalar(select(Employer).where(Employer.user_id == item.id))
         if employer is not None:
             employer.approved = False
+    audit(db, user, 'user.access_changed', 'user', item.id, {'is_active': {'before': before, 'after': item.is_active}})
     db.commit()
     return {'id': item.id, 'is_active': item.is_active}
 
@@ -184,11 +234,13 @@ def approve_company(company_id: int, payload: ApprovalPatch, user: AdminUser, db
         raise HTTPException(409, 'Reactivate the employer account before approving publishing')
     if item.approved == payload.approved:
         return {'id': item.id, 'approved': item.approved}
+    before = item.approved
     item.approved = payload.approved
     if account is not None:
         db.add(Notification(user_id=account.id, message=(
             'Your company publishing access has been approved.' if payload.approved else
             'Your company publishing access has been suspended. Contact the administrator for details.')))
+    audit(db, user, 'company.approval_changed', 'company', item.id, {'approved': {'before': before, 'after': item.approved}})
     db.commit()
     return {'id': item.id, 'approved': item.approved}
 
@@ -209,7 +261,9 @@ def moderate_job(job_id: int, payload: ActivePatch, user: AdminUser, db: Databas
     job = db.get(Job, job_id)
     if job is None:
         raise HTTPException(404, 'Job not found')
+    before = job.is_active
     job.is_active = payload.is_active
+    audit(db, user, 'job.access_changed', 'job', job.id, {'is_active': {'before': before, 'after': job.is_active}})
     db.commit()
     return {'id': job.id, 'is_active': job.is_active}
 
@@ -221,6 +275,8 @@ def add_skill(payload: SkillCreate, user: AdminUser, db: Database):
     skill = Skill(**payload.model_dump())
     try:
         db.add(skill)
+        db.flush()
+        audit(db, user, 'skill.created', 'skill', skill.id, {'created': True})
         db.commit()
     except IntegrityError:
         db.rollback()

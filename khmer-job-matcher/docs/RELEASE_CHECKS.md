@@ -1,60 +1,44 @@
-# Delivery status
+# Current release checks
 
-## Latest project repair pass
+This is the current verification record, updated 2026-11-04. Earlier implementation and admin milestone documents are historical snapshots, not current dependency or feature status.
 
-See [PROJECT_FIXES.md](PROJECT_FIXES.md) for the current repairs, files, endpoints, and remaining scope. The latest full backend run passed **55 tests with no skips** after installing the declared scikit-learn/pandas/PyMuPDF dependencies. Frontend checks passed **25 UI tests**, **43 logic tests**, **5 Chromium workflows**, lint/build, and rendering checks. The live catalog still has **24 jobs**. Earlier counts and missing-package/browser limitations below are historical; unfinished roadmap modules and external service configuration remain open.
-
-## Admin dashboard milestone update
-
-The latest Milestone 0/1 audit and results are recorded in [ADMIN_DASHBOARD_MILESTONES.md](ADMIN_DASHBOARD_MILESTONES.md). The declared frontend test dependencies and Chromium are now installed locally, and the lockfile has been refreshed. Current checks passed: 47 backend tests (1 optional scikit-learn check skipped), 22 interactive UI tests, 4 real Chromium end-to-end tests, build/lint, route/admin rendering, and 39 multilingual rendering checks. The Chromium suite includes 1440px/768px/360px admin layouts, mobile navigation, persistent sign-in, and logout. A separate read-only FastAPI/MySQL check passed without changing existing records.
-
-Earlier checks and limitations below are historical; the old statements that UI/browser dependencies were unavailable and browser execution was pending are superseded by this update. SMTP, real OAuth providers, optional ML/PDF dependencies, reference-screenshot parity, and unfinished admin workflows are not claimed complete.
-
-The core local recruitment workflows are implemented. This document distinguishes executed checks from code that still needs its dependencies or external configuration. It is not a claim of 100% production readiness.
-
-## Verified locally
+## Executed checks
 
 | Check | Result |
 |---|---|
-| Backend API/workflow suite | 36 tests passed; 1 optional scikit-learn parity test skipped |
-| Node API/logic tests | 37 tests passed |
-| Server-side route rendering | 25 page checks passed |
-| Frontend production build | Passed |
-| Frontend lint | Passed |
-| MySQL migrations | Applied through `0005`, incremental |
-| Existing sample records | Four jobs and four companies preserved |
-| Private upload storage | 5 MB MySQL chunk round-trip passed with 1 MB packet setting; test transaction rolled back |
-| Migration up/down | Passed against disposable SQLite |
-| Live local API/proxy | Job/company reads passed |
-| ML model | Built-in TF-IDF trained on four public jobs; 990 learned features; signed artifact saved |
-| ML evaluation | Two synthetic profiles evaluated; no human-label accuracy claim |
-| Google/Facebook auth | Mocked provider/security tests passed; real apps/credentials not configured |
-| Multilingual rendering | 39 checks across English, Khmer and Simplified Chinese |
-| Browser test scripts | Syntax checked; execution pending |
+| Backend API, permissions, migrations and workflows | 60 tests passed, no warnings or skips |
+| Python dependency consistency | `pip check` passed |
+| Frontend logic | 43 tests passed |
+| Interactive UI | 27 tests passed |
+| Chromium browser workflows | 6 passed, including persistent audit history and responsive layouts |
+| Admin and public route rendering | Passed |
+| Multilingual rendering | 39 checks passed |
+| Lint | Passed |
+| Production build | Passed; main entry approximately 278 KB; every chunk below 500 KB |
+| Real MySQL migration | Applied additive migration `0006` for administrator activity |
+| Live application | Website, API health, jobs and companies returned HTTP 200 through port 5173 |
+| Live protected endpoints | Skill gaps, activity logs and dashboard returned 200 for an existing admin; guest requests returned 401 |
+| Existing catalog | 24 jobs preserved; live checks made no account or job changes |
 
-Backend tests cover role enforcement, account isolation, employer approvals, publication/closure, job applications, resume ownership and employer access, attachment deletion, allowed application status transitions, notifications, matching, login throttling, reset-code verification, hashed single-use reset tokens, replay rejection, and revocation of old sessions.
+React and form dependencies now have separate cacheable chunks. This reduces the largest entry file, not the total bytes of all initial dependencies. No performance benchmark is claimed.
 
-## Still required before calling the release complete
+Skill Gap Analytics is available at `/dashboard/skill-gaps`. It compares required skills on open jobs from approved employers with skills on active student profiles. Demo jobs are excluded unless selected. Counts represent recorded skills, not validated competence, hiring probability, or applicant interest. With no eligible profiles coverage is unavailable, not zero percent.
 
-1. **Install the declared packages from a network-enabled terminal.** Package downloads are blocked in this agent environment. `pip install -r backend/requirements.txt` installs scikit-learn/pandas/PyMuPDF; `npm install` installs React Hook Form/Zod/Axios/Recharts and the UI/browser test tools. Refresh the package lock. The working built-in TF-IDF and native form/SVG-chart fallbacks were used here; the optional library branches still need verification.
-2. **Run real browser checks.** This session's approval policy rejected browser launch. `npm run test:ui` and `npm run test:e2e` are supplied, but have not run. Check mobile/tablet/desktop layout, keyboard focus, dialogs, form navigation, and account-to-application flow. No captured screenshots are claimed.
-3. **Configure SMTP when ready.** You explicitly chose documentation instead of providing a mail service. Recovery remains unavailable by default and does not claim to send email. The complete backend flow was tested using a captured mailer, not a real provider.
-4. **Validate PDF uploads after installing PyMuPDF.** Text resumes, upload bounds, chunk storage, private access, deletion, and attachment ownership were tested. The PDF parser branch is implemented but could not execute without the package. Scanned-image OCR is explicitly unsupported.
-5. **Evaluate recommendation quality using human labels.** The matching formula, ranges, aliases, Khmer character comparison, and a controlled expected ranking are tested. There is no claimed real-world accuracy or hiring probability.
-6. **Review localization before public launch.** English, Khmer, and Simplified Chinese interface catalogs are implemented across the website and dashboards. Job/company content remains in the author's language; unknown service messages fall back to their original language. Native-speaker review and interactive layout verification are still needed.
-7. **Public deployment remains a separate delivery step.** Configure production HTTPS, a production database/application user, secrets, a reverse proxy, backups/retention, final service terms, and provider accounts. The project currently runs locally. Google/Facebook OAuth code is implemented; real provider login needs app credentials and browser verification. Apple sign-in stays disabled.
+Activity Logs is available at `/dashboard/activity-logs`, with action filtering and pagination. It records administrator account access, company approval, job moderation, skill creation and explicit model training. Database mutations and their audit entries commit together. Logs contain actor/target IDs and limited change metadata, without emails, passwords or resume content. It begins at migration `0006`; earlier actions are not reconstructed. The application exposes no audit edit/delete endpoint; database operators still control storage. Model files are external to database transactions.
 
-## Run the remaining checks
+The test-client deprecation was resolved by installing and declaring `httpx2`; `httpx` remains required by provider integrations. The wrong-algorithm JWT fixture uses a sufficiently long test key. Neither warning is suppressed.
 
-```powershell
-# From the project root:
-.\backend\venv\Scripts\python.exe -m pip install -r backend\requirements.txt
-cd frontend
-npm install
-npm run test:ui
-npx playwright install chromium
-$env:E2E_PYTHON = (Resolve-Path ..\backend\venv\Scripts\python.exe).Path
-npm run test:e2e
-```
+## Remaining limitations
 
-The browser checks use an isolated SQLite database and ports 5175/8011. They do not reuse the normal MySQL-backed servers. CI is defined in `.github/workflows/checks.yml`; the workflow has not been pushed or run in this session.
+- SMTP and Google/Facebook provider credentials still require operator configuration; no real mail or provider sign-in is certified.
+- Human review of Khmer/Chinese translations and recommendation quality remains required before public launch. Scanned PDF OCR is unsupported.
+- Detailed student/company administration, document verification, job approval states, skill merging, matching history, PDF report exports and platform settings remain future work.
+- Production hosting, HTTPS, backups/retention, production database credentials and deployment are separate from this local delivery.
+
+## Reproduce
+
+From `backend`, run `venv/Scripts/python.exe -m pytest -q` and `venv/Scripts/python.exe -m pip check`.
+From `frontend`, run `npm.cmd test`, `npm.cmd run test:ui`, `npm.cmd run test:admin`, `npm.cmd run test:routes`, `npm.cmd run test:i18n`, `npm.cmd run lint`, and `npm.cmd run build`.
+For Playwright set `E2E_PYTHON` to the backend virtual environment Python and `PLAYWRIGHT_BROWSERS_PATH` to `.local-run/ms-playwright`, then run `npm.cmd run test:e2e`. It uses disposable SQLite and ports 5175/8011, not the normal MySQL database.
+
+Windows PowerShell may block `npm.ps1`; use `npm.cmd`. Node is also available in `.local-run/tooling/node-v22.23.4-win-x64`. The normal project is served at http://localhost:5173 with FastAPI on http://127.0.0.1:8000. Start MySQL first. Apply migrations before starting the API. Never reset an existing database.

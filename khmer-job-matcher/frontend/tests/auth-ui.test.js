@@ -4,16 +4,15 @@ import { validateAuthForm, editOtp, maskEmail, passwordStrength } from '../src/s
 import { authLink } from '../src/services/auth-links.js'
 import { authService, createAxiosAuthService, demoRecovery, DEMO_CODE } from '../src/services/authService.js'
 
-const registration = { firstName: 'Sokha', lastName: 'Chan', email: 'sokha@example.com', phone: '+855 12 345 678', password: 'A secure passphrase 123!', confirmPassword: 'A secure passphrase 123!', terms: true }
+const registration = { name: 'Sokha Chan', email: 'sokha@example.com', password: 'A secure passphrase 123!', confirmPassword: 'A secure passphrase 123!' }
 
-test('auth forms validate email, password boundaries, name, optional phone, and consent', () => {
+test('auth forms validate email, password boundaries, name, and password confirmation', () => {
   assert.deepEqual(validateAuthForm('register', registration), {})
-  assert.deepEqual(validateAuthForm('register', { ...registration, phone: '' }), {})
   assert.ok(validateAuthForm('login', { email: 'bad-email', password: 'short' }).email)
   assert.ok(validateAuthForm('login', { email: registration.email, password: 'a'.repeat(129) }).password)
-  const errors = validateAuthForm('register', { ...registration, firstName: ' ', phone: 'not a phone', terms: false, confirmPassword: 'different' })
-  for (const field of ['firstName', 'phone', 'terms', 'confirmPassword']) assert.ok(errors[field])
-  assert.ok(validateAuthForm('register', { ...registration, firstName: 'a'.repeat(40), lastName: 'b'.repeat(40) }).lastName)
+  const errors = validateAuthForm('register', { ...registration, name: ' ', confirmPassword: 'different' })
+  for (const field of ['name', 'confirmPassword']) assert.ok(errors[field])
+  assert.ok(validateAuthForm('register', { ...registration, name: 'a'.repeat(81) }).name)
   assert.equal(passwordStrength('short').score, 1)
   assert.equal(passwordStrength(registration.password).score, 4)
 })

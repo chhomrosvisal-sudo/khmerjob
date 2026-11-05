@@ -2,7 +2,7 @@ from fastapi import APIRouter, Response, Query, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload, selectinload
 from app.core.dependencies import Database, StudentUser, AdminUser
-from app.models import Job, JobSkill, Skill, StudentSkill, Employer
+from app.models import Job, JobSkill, Skill, StudentSkill, Employer, AdminActivity
 from app.ml.matching import rank_jobs, FORMULA, LIMITATIONS
 from app.ml.model import ensure_model, model_status, ModelUnavailable
 from app.ml.text import profile_text
@@ -42,7 +42,11 @@ def admin_status(user: AdminUser, db: Database, response: Response):
 @router.post('/admin/ml/train', response_model=ModelMetadata)
 def train(payload: TrainRequest, user: AdminUser, db: Database, response: Response):
     response.headers['Cache-Control'] = 'no-store'
-    return fitted(catalog(db), force=True, engine=payload.engine).metadata()
+    metadata = fitted(catalog(db), force=True, engine=payload.engine).metadata()
+    db.add(AdminActivity(actor_id=user.id, action='model.trained', target_type='model', target_id=0,
+                         changes={'engine': payload.engine}))
+    db.commit()
+    return metadata
 
 
 @router.post('/match', response_model=MatchPage)

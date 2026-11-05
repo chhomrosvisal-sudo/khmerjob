@@ -245,3 +245,5 @@ html[data-theme="dark"] .admin-confirm-dialog{background:#0e2342;color:#e5edf8;b
 html:not([data-theme="dark"]) .admin-analytics-filters label{color:#526078}
 html:not([data-theme="dark"]) .admin-analytics-filters input{color-scheme:light;background:#fff;color:#1b2941;border-color:#d5dce8}
 html:not([data-theme="dark"]) .admin-shell .admin-analytics-filters button:not(:last-child){background:#fff;color:#1b2941;border-color:#d5dce8}
+.admin-insights>p,.admin-insights>label{display:block;margin:18px 24px}
+.admin-insights select{max-width:100%;padding:8px;border:1px solid #eae4f0;border-radius:8px}

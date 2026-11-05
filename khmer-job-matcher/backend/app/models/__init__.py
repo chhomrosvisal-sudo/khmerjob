@@ -161,6 +161,17 @@ class SocialIdentity(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
 
+class AdminActivity(Base):
+    __tablename__ = 'admin_activities'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    actor_id: Mapped[int | None] = mapped_column(ForeignKey('users.id', ondelete='SET NULL'), index=True)
+    action: Mapped[str] = mapped_column(String(60), index=True)
+    target_type: Mapped[str] = mapped_column(String(30))
+    target_id: Mapped[int] = mapped_column()
+    changes: Mapped[dict] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), index=True)
+
+
 class OAuthFlow(Base):
     __tablename__ = 'oauth_flows'
     id: Mapped[str] = mapped_column(String(64), primary_key=True)

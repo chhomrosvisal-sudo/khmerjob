@@ -1,6 +1,6 @@
 import { useI18n } from '../../i18n/useI18n'
 import { useState } from 'react'
-import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useAuthForm } from '@auth-form'
 import { postLoginPath } from '../../services/auth-navigation'
@@ -20,6 +20,7 @@ export default function Login() {
   const { user, signIn } = useAuth()
   const [params] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const demo = params.get('demo') === '1'
   const employer = params.get('portal') === 'employer'
   const destination = postLoginPath(user, params.get('next'))
@@ -39,6 +40,7 @@ export default function Login() {
     } catch (failure) { setError(failure.message || 'We could not sign you in. Please try again.') }
   }
   return <AuthLayout variant="login" demo={demo}><div className="au-heading"><span className="au-eyebrow">{t("WELCOME BACK")}</span><h1>{employer ? t("Employer login") : t("Login")}</h1><p>{t("Login to access your website account.")}</p></div>
+    {location.state?.registered && <FormError success message={t("Account created. Log in to find a job.")} />}
     {demo && <p className="au-mode-note">{t("Frontend demo · no real sign-in or dashboard access.")}</p>}
     {employer && <p className="au-mode-note">{t("Sign in with your employer account. New employers can register below for administrator approval.")}</p>}
     {employer && <p className="au-switch-page"><Link to="/employer-register">{t("Create an employer account")}</Link></p>}

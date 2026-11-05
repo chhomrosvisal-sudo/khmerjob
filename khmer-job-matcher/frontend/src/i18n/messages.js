@@ -932,6 +932,26 @@ export const messages = {
     "km": "បង្កើតគណនី",
     "zh": "创建账户"
   },
+  "Create your account": {
+    "km": "បង្កើតគណនីរបស់អ្នក",
+    "zh": "创建您的账户"
+  },
+  "Username": {
+    "km": "ឈ្មោះអ្នកប្រើប្រាស់",
+    "zh": "用户名"
+  },
+  "Have an account?": {
+    "km": "មានគណនីហើយឬ?",
+    "zh": "已有账户？"
+  },
+  "user_name": {
+    "km": "ឈ្មោះអ្នកប្រើប្រាស់",
+    "zh": "用户名"
+  },
+  "user_email": {
+    "km": "អ៊ីមែល",
+    "zh": "电子邮箱"
+  },
   "I agree to the": {
     "km": "ខ្ញុំយល់ព្រមតាម",
     "zh": "我同意"
@@ -1543,6 +1563,14 @@ export const messages = {
   "Name": {
     "km": "ឈ្មោះ",
     "zh": "姓名"
+  },
+  "Account created. Log in to find a job.": {
+    "km": "គណនីបានបង្កើតរួច។ សូមចូលគណនីដើម្បីរកការងារ។",
+    "zh": "账户已创建。请登录以查找工作。"
+  },
+  "Sokha Chan": {
+    "km": "សុខា ចាន់",
+    "zh": "Sokha Chan"
   },
   "Interests": {
     "km": "ចំណាប់អារម្មណ៍",
@@ -3515,5 +3543,77 @@ export const messages = {
   "Recent activity shows record creation, not administrator audit history.": {
     "km": "សកម្មភាពថ្មីៗបង្ហាញការបង្កើតទិន្នន័យ មិនមែនប្រវត្តិសវនកម្មអ្នកគ្រប់គ្រងទេ។",
     "zh": "近期活动显示记录创建情况，并非管理员审计历史。"
+  },
+  "Compare job requirements with recorded profile skills.": {
+    "km": "ប្រៀបធៀបជំនាញដែលការងារត្រូវការជាមួយជំនាញក្នុងប្រវត្តិរូប។",
+    "zh": "比较职位要求与档案中记录的技能。"
+  },
+  "Review recorded administrator changes.": {
+    "km": "ពិនិត្យការផ្លាស់ប្តូរដែលបានកត់ត្រារបស់អ្នកគ្រប់គ្រង។",
+    "zh": "查看已记录的管理员更改。"
+  },
+  "Administrator changes recorded from this release onward. Earlier actions are not reconstructed.": {
+    "km": "ការផ្លាស់ប្តូររបស់អ្នកគ្រប់គ្រងត្រូវបានកត់ត្រាចាប់ពីកំណែនេះ។ សកម្មភាពមុនៗមិនត្រូវបានបង្កើតឡើងវិញទេ។",
+    "zh": "从此版本开始记录管理员更改，不重建之前的操作。"
+  },
+  "Required skills in open jobs from approved employers, compared with active job-seeker profiles. Missing a skill does not imply interest in that job or inability to do it.": {
+    "km": "ជំនាញដែលការងារបើកទទួលរបស់និយោជកដែលបានអនុម័តត្រូវការ ធៀបនឹងប្រវត្តិរូបអ្នកស្វែងរកការងារសកម្ម។ កង្វះជំនាញមិនបញ្ជាក់ពីចំណាប់អារម្មណ៍ ឬអសមត្ថភាពក្នុងការងារនោះទេ។",
+    "zh": "比较已获批准雇主的开放职位所需技能与活跃求职者档案。缺少技能不代表对此职位有兴趣或无法胜任。"
+  },
+  "Include fictional demo jobs": {
+    "km": "រួមបញ្ចូលការងារសាកល្បងប្រឌិត",
+    "zh": "包含虚构演示职位"
+  },
+  "No administrator changes recorded for this filter.": {
+    "km": "គ្មានការផ្លាស់ប្តូររបស់អ្នកគ្រប់គ្រងសម្រាប់តម្រងនេះទេ។",
+    "zh": "此筛选条件下没有管理员更改记录。"
+  },
+  "No required skills found for the selected jobs.": {
+    "km": "រកមិនឃើញជំនាញដែលត្រូវការសម្រាប់ការងារដែលបានជ្រើសរើសទេ។",
+    "zh": "所选职位没有所需技能记录。"
+  },
+  "Jobs requiring skill": {
+    "km": "ការងារដែលត្រូវការជំនាញ",
+    "zh": "需要此技能的职位"
+  },
+  "Profiles with skill": {
+    "km": "ប្រវត្តិរូបដែលមានជំនាញ",
+    "zh": "具备此技能的档案"
+  },
+  "Profiles missing skill": {
+    "km": "ប្រវត្តិរូបដែលខ្វះជំនាញ",
+    "zh": "缺少此技能的档案"
+  },
+  "Administrator ID": {
+    "km": "លេខសម្គាល់អ្នកគ្រប់គ្រង",
+    "zh": "管理员编号"
+  },
+  "All actions": {
+    "km": "សកម្មភាពទាំងអស់",
+    "zh": "所有操作"
+  },
+  "No profiles": {
+    "km": "គ្មានប្រវត្តិរូប",
+    "zh": "没有档案"
+  },
+  "Deleted account": {
+    "km": "គណនីដែលបានលុប",
+    "zh": "已删除账户"
+  },
+  "Profiles": {
+    "km": "ប្រវត្តិរូប",
+    "zh": "档案"
+  },
+  "Record": {
+    "km": "កំណត់ត្រា",
+    "zh": "记录"
+  },
+  "Changes": {
+    "km": "ការផ្លាស់ប្តូរ",
+    "zh": "更改"
+  },
+  "Coverage": {
+    "km": "ការគ្របដណ្តប់",
+    "zh": "覆盖率"
   }
 }

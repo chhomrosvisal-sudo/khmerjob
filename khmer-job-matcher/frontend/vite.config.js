@@ -11,6 +11,10 @@ const proxyTarget = process.env.API_PROXY_TARGET || 'http://127.0.0.1:8000'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   cacheDir: process.env.VITE_CACHE_DIR || 'node_modules/.vite',
+  build: { rolldownOptions: { output: { codeSplitting: { groups: [
+    { name: 'react-vendor', test: /node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom)[\\/]/, priority: 20 },
+    { name: 'form-vendor', test: /node_modules[\\/](zod|react-hook-form)[\\/]/, priority: 10 },
+  ] } } } },
   optimizeDeps: { include: ['react', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'react-router-dom', 'lucide-react'] },
   server: {
     host: 'localhost', port: 5173, strictPort: true,

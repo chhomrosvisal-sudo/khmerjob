@@ -16,11 +16,7 @@ export function validateAuthForm(mode, values) {
     if (!values.password || values.password.length < 12 || values.password.length > 128) errors.password = 'Use a password between 12 and 128 characters.'
   }
   if (mode === 'register') {
-    if (!values.firstName?.trim()) errors.firstName = 'Enter your first name.'
-    if (!values.lastName?.trim()) errors.lastName = 'Enter your last name.'
-    if (`${values.firstName || ''} ${values.lastName || ''}`.trim().length > 80) errors.lastName = 'Your full name must be 80 characters or fewer.'
-    if (values.phone && !/^\+?[0-9 ()-]{7,24}$/.test(values.phone)) errors.phone = 'Enter a valid phone number or leave it blank.'
-    if (!values.terms) errors.terms = 'Please read and accept the terms and privacy notice.'
+    if (!values.name?.trim() || values.name.trim().length > 80) errors.name = 'Enter a name between 1 and 80 characters.'
   }
   if (mode === 'employer-register') {
     if (!values.company?.trim() || values.company.trim().length > 160) errors.company = 'Enter a company name of 1–160 characters.'

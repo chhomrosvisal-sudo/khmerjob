@@ -1,8 +1,8 @@
 import { request } from './api.js'
 
 export const authService = {
-  register: ({ firstName, lastName, email, password }) => request('/api/auth/register', {
-    method: 'POST', body: { name: `${firstName.trim()} ${lastName.trim()}`, email: email.trim(), password },
+  register: ({ name, email, password }) => request('/api/auth/register', {
+    method: 'POST', body: { name: name.trim(), email: email.trim(), password },
   }),
 }
 
@@ -14,8 +14,8 @@ export const recoveryService = {
 
 // Prepared for a future Axios client. Pass axios.create({ baseURL: '/' }); never embed secrets.
 export function createAxiosAuthService(client) {
-  return { register: async ({ firstName, lastName, email, password }) => {
-    const response = await client.post('/api/auth/register', { name: `${firstName.trim()} ${lastName.trim()}`, email: email.trim(), password })
+  return { register: async ({ name, email, password }) => {
+    const response = await client.post('/api/auth/register', { name: name.trim(), email: email.trim(), password })
     return response.data
   } }
 }
