@@ -84,7 +84,9 @@ After installation/migrations, the convenience helper can start missing servers 
 .\scripts\Start-Local.ps1
 ```
 
-It stores logs in ignored `.local-run/`, does not install/migrate/reset anything, and never changes Windows security settings. PowerShell may block script execution; use the separate server commands below when that happens. Use `npm.cmd` instead of `npm` if `npm.ps1` is blocked. If scripts are blocked, use the separate commands above.
+VS Code also runs this helper when you open the project folder. If VS Code asks whether to trust the workspace, trust it to enable the startup task. The task starts only missing servers and checks that the API can read jobs through the website proxy. Keep MySQL running in XAMPP; the startup task does not start, install, migrate, seed, or reset the database.
+
+The helper stores logs in ignored `.local-run/` and never changes Windows security settings. If startup reports that the database is unavailable, start MySQL in XAMPP and run the helper again. Use `npm.cmd` instead of `npm` if `npm.ps1` is blocked. If scripts are blocked, use the separate server commands above.
 
 ### Create privileged accounts
 

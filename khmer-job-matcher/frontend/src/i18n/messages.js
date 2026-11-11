@@ -3284,6 +3284,10 @@ export const messages = {
     "km": "មិនអាចភ្ជាប់ទៅ API។ សូមពិនិត្យថា backend កំពុងដំណើរការ និងការកំណត់ត្រឹមត្រូវ។",
     "zh": "无法连接 API。请检查后端是否运行，以及 API 地址和 CORS 来源配置是否正确。"
   },
+  "The API server is temporarily unavailable. Make sure the backend is running, then try again.": {
+    "km": "ម៉ាស៊ីនមេ API មិនអាចប្រើបានបណ្ដោះអាសន្នទេ។ សូមពិនិត្យថា backend កំពុងដំណើរការ រួចព្យាយាមម្ដងទៀត។",
+    "zh": "API 服务器暂时不可用。请确认后端正在运行，然后重试。"
+  },
   "The request failed. Please try again.": {
     "km": "សំណើបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
     "zh": "请求失败，请重试。"

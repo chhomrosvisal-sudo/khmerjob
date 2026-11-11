@@ -50,9 +50,16 @@ test('aborted requests preserve abort behavior for stale result cancellation', a
   await assert.rejects(request('/api/jobs'), error => error.name === 'AbortError')
 })
 
-test('unreadable upstream responses are reported', async () => {
-  globalThis.fetch = async () => new Response('<html>Gateway error</html>', { status: 502 })
-  await assert.rejects(request('/api/jobs'), error => error.status === 502 && error.message.includes('unreadable'))
+test('gateway failures explain that the API server is unavailable', async () => {
+  for (const status of [502, 503, 504]) {
+    globalThis.fetch = async () => new Response('<html>Gateway error</html>', { status })
+    await assert.rejects(request('/api/jobs'), error => error.status === status && error.message.includes('backend is running'))
+  }
+})
+
+test('other unreadable API responses keep their explicit status', async () => {
+  globalThis.fetch = async () => new Response('<html>Internal server error</html>', { status: 500 })
+  await assert.rejects(request('/api/jobs'), error => error.status === 500 && error.message.includes('unreadable'))
 })
 
 test('query strings encode search and pagination without losing boolean filters', () => {

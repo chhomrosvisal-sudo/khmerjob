@@ -761,6 +761,7 @@ Invalid or expired credentials	ព័ត៌មានចូលគណនីមិ�
 Email is already registered	អ៊ីមែលនេះបានចុះឈ្មោះរួចហើយ	该邮箱已注册
 Invalid request	សំណើមិនត្រឹមត្រូវ	请求无效
 Cannot reach the API. Check that the backend is running and the API URL and CORS origin are correct.	មិនអាចភ្ជាប់ទៅ API។ សូមពិនិត្យថា backend កំពុងដំណើរការ និងការកំណត់ត្រឹមត្រូវ។	无法连接 API。请检查后端是否运行，以及 API 地址和 CORS 来源配置是否正确。
+The API server is temporarily unavailable. Make sure the backend is running, then try again.	ម៉ាស៊ីនមេ API មិនអាចប្រើបានបណ្ដោះអាសន្នទេ។ សូមពិនិត្យថា backend កំពុងដំណើរការ រួចព្យាយាមម្ដងទៀត។	API 服务器暂时不可用。请确认后端正在运行，然后重试。
 The request failed. Please try again.	សំណើបរាជ័យ។ សូមព្យាយាមម្តងទៀត។	请求失败，请重试。
 The API returned an unreadable response.	API បានត្រឡប់ចម្លើយដែលមិនអាចអានបាន។	API 返回了无法读取的响应。
 Keep your CV focused on the role. Add your education, relevant projects, tools you know, and a way to contact you. Describe what you contributed to each project, even if it was a class assignment. Review your spelling and save a readable PDF.	រៀបចំប្រវត្តិរូបឱ្យផ្តោតលើមុខតំណែង។ បន្ថែមការអប់រំ គម្រោងពាក់ព័ន្ធ ឧបករណ៍ដែលចេះប្រើ និងព័ត៌មានទំនាក់ទំនង។ បង្ហាញការរួមចំណែកក្នុងគម្រោង ទោះជាកិច្ចការថ្នាក់រៀនក៏ដោយ។ ពិនិត្យអក្ខរាវិរុទ្ធ ហើយរក្សាជា PDF ដែលងាយអាន។	让简历聚焦目标职位，写明教育经历、相关项目、熟悉的工具及联系方式。即使是课堂项目，也应说明您的具体贡献。检查拼写，并保存为易于阅读的 PDF。

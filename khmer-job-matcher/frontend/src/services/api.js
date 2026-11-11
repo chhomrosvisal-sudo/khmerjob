@@ -19,7 +19,12 @@ export async function request(path, { token, body, signal, method = 'GET', raw =
   if (response.status === 204) return null
   if (response.ok && responseType === 'blob') return response.blob()
   let data
-  try { data = await response.json() } catch { throw new ApiError('The API returned an unreadable response.', response.status) }
+  try { data = await response.json() } catch {
+    if ([502, 503, 504].includes(response.status)) {
+      throw new ApiError('The API server is temporarily unavailable. Make sure the backend is running, then try again.', response.status)
+    }
+    throw new ApiError('The API returned an unreadable response.', response.status)
+  }
   if (!response.ok) {
     const validation = Array.isArray(data?.error?.details) ? data.error.details : Array.isArray(data?.detail) ? data.detail : []
     const details = validation.filter(item => item && typeof item === 'object').map(item => {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2026 at 12:04 PM
+-- Generation Time: Nov 11, 2026 at 04:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin_activities`
+--
+
+CREATE TABLE `admin_activities` (
+  `id` int(11) NOT NULL,
+  `actor_id` int(11) DEFAULT NULL,
+  `action` varchar(60) NOT NULL,
+  `target_type` varchar(30) NOT NULL,
+  `target_id` int(11) NOT NULL,
+  `changes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`changes`)),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `alembic_version`
 --
 
@@ -36,7 +52,7 @@ CREATE TABLE `alembic_version` (
 --
 
 INSERT INTO `alembic_version` (`version_num`) VALUES
-('0005');
+('0006');
 
 -- --------------------------------------------------------
 
@@ -79,7 +95,10 @@ INSERT INTO `employers` (`id`, `user_id`, `name`, `is_demo`, `demo_key`, `descri
 (1, NULL, 'Mekong Digital Studio', 1, 'initial-frontend', '', '', '', 1),
 (2, NULL, 'Lotus Learning Lab', 1, 'initial-web-intern', '', '', '', 1),
 (3, NULL, 'Tonle Insights', 1, 'initial-analyst', '', '', '', 1),
-(4, NULL, 'Palm Creative', 1, 'initial-react-intern', '', '', '', 1);
+(4, NULL, 'Palm Creative', 1, 'initial-react-intern', '', '', '', 1),
+(5, 3, 'nana', 0, NULL, '', '', '', 0),
+(6, 4, 'Sasa', 0, NULL, '', '', '', 0),
+(7, 5, 'sasa', 0, NULL, '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -293,8 +312,12 @@ CREATE TABLE `rate_limits` (
 --
 
 INSERT INTO `rate_limits` (`key`, `window_start`, `count`) VALUES
-('7b50bc4e3576c57f8181cbdd4f14ea329a89188ab4473cf3e03d52a4ed94ecad', '2026-11-02 09:58:15', 1),
-('991e604f66c5073e0880e4b0809cfde635d4e55ea94212c99e9f0473b5b131a9', '2026-11-02 09:58:15', 1);
+('0ac604690577e1e21464779590dd09decff54eadfea9d7c4f84ddc11b183ea4d', '2026-11-05 11:23:21', 1),
+('2ea87254a14a9172e6f18a023ff9e96ba6bcb51738a55e86afaa6f52c3878343', '2026-11-11 03:03:52', 2),
+('6cdef4ef43eb7dca182f290ab70a650cd933429a4db2267f4d38d32439c70dd7', '2026-11-11 03:15:38', 1),
+('7b50bc4e3576c57f8181cbdd4f14ea329a89188ab4473cf3e03d52a4ed94ecad', '2026-11-11 03:15:38', 1),
+('991e604f66c5073e0880e4b0809cfde635d4e55ea94212c99e9f0473b5b131a9', '2026-11-02 09:58:15', 1),
+('e0a821c794b1ca3b2054eccc10f2800d121885ddf26a47ebe3a6f44c31c79efb', '2026-11-11 03:03:52', 1);
 
 -- --------------------------------------------------------
 
@@ -452,11 +475,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password_hash`, `role`, `created_at`, `token_version`, `is_active`) VALUES
-(2, 'admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$5RG6nZAFH753t4vGPU2Xgw$3oU5DaqW6JBnauCCcm1rAI8Z6fg5AD078fpZVAOZ3RQ', 'admin', '2026-10-28 14:48:30', 1, 1);
+(2, 'admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$5RG6nZAFH753t4vGPU2Xgw$3oU5DaqW6JBnauCCcm1rAI8Z6fg5AD078fpZVAOZ3RQ', 'admin', '2026-10-28 14:48:30', 1, 1),
+(3, 'r@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$fHPDdPV8yz6Tk/eZBVEz4Q$0YNw+/X1aYL/+fyliLuoTBjZn8/KuszFmzoV9N+hzCw', 'employer', '2026-11-05 18:23:20', 0, 1),
+(4, 'chhomvisal168@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$KwdUhlXnuQttZ5HlSkGAQg$e80NNGriZrPRxkJtTarJWXyZj2GKzvjN+FEWDN1RyeM', 'employer', '2026-11-11 10:03:52', 0, 1),
+(5, 'chhomrosvisal@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$N9VS06rmvJwfgwi54F2h6g$6qpgJinTeCvPD4QX2B49w+aSeo6sN1qq5Y6754dDXjc', 'employer', '2026-11-11 10:15:38', 1, 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin_activities`
+--
+ALTER TABLE `admin_activities`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ix_admin_activities_actor_id` (`actor_id`),
+  ADD KEY `ix_admin_activities_action` (`action`),
+  ADD KEY `ix_admin_activities_created_at` (`created_at`);
 
 --
 -- Indexes for table `alembic_version`
@@ -589,6 +624,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_activities`
+--
+ALTER TABLE `admin_activities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `applications`
 --
 ALTER TABLE `applications`
@@ -598,7 +639,7 @@ ALTER TABLE `applications`
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -645,6 +686,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admin_activities`
+--
+ALTER TABLE `admin_activities`
+  ADD CONSTRAINT `admin_activities_ibfk_1` FOREIGN KEY (`actor_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `applications`
