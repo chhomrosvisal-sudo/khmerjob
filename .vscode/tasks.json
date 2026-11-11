@@ -1,31 +1,44 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Start Khmer Job Matcher",
-      "type": "process",
-      "command": "powershell.exe",
-      "args": [
-        "-NoLogo",
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        "${workspaceFolder}\\khmer-job-matcher\\scripts\\Start-Local.ps1"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}\\khmer-job-matcher"
-      },
-      "runOptions": {
-        "runOn": "folderOpen",
-        "instanceLimit": 1
-      },
-      "presentation": {
-        "reveal": "silent",
-        "panel": "dedicated",
-        "focus": false
-      },
-      "problemMatcher": []
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start Khmer Job Matcher",
+			"type": "process",
+			"command": "powershell.exe",
+			"args": [
+				"-NoLogo",
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\khmer-job-matcher\\scripts\\Start-Local.ps1"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}\\khmer-job-matcher"
+			},
+			"runOptions": {
+				"runOn": "folderOpen",
+				"instanceLimit": 1
+			},
+			"presentation": {
+				"reveal": "silent",
+				"panel": "dedicated",
+				"focus": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Create Admin Account",
+			"type": "shell",
+			"command": "powershell.exe",
+			"args": [
+				"-NoLogo",
+				"-NoProfile",
+				"-Command",
+				"Set-Location 'D:\\Project_Python_y4s2\\khmer-job-matcher\\backend'; & '.\\venv\\Scripts\\python.exe' -m app.create_user --role admin --email admin@example.com"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
 }

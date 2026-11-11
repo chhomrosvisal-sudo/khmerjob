@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2026 at 04:31 AM
+-- Generation Time: Nov 11, 2026 at 05:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -96,9 +96,9 @@ INSERT INTO `employers` (`id`, `user_id`, `name`, `is_demo`, `demo_key`, `descri
 (2, NULL, 'Lotus Learning Lab', 1, 'initial-web-intern', '', '', '', 1),
 (3, NULL, 'Tonle Insights', 1, 'initial-analyst', '', '', '', 1),
 (4, NULL, 'Palm Creative', 1, 'initial-react-intern', '', '', '', 1),
-(5, 3, 'nana', 0, NULL, '', '', '', 0),
-(6, 4, 'Sasa', 0, NULL, '', '', '', 0),
-(7, 5, 'sasa', 0, NULL, '', '', '', 0);
+(5, NULL, 'nana', 0, NULL, '', '', '', 0),
+(6, NULL, 'Sasa', 0, NULL, '', '', '', 0),
+(7, NULL, 'sasa', 0, NULL, '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -315,8 +315,9 @@ INSERT INTO `rate_limits` (`key`, `window_start`, `count`) VALUES
 ('0ac604690577e1e21464779590dd09decff54eadfea9d7c4f84ddc11b183ea4d', '2026-11-05 11:23:21', 1),
 ('2ea87254a14a9172e6f18a023ff9e96ba6bcb51738a55e86afaa6f52c3878343', '2026-11-11 03:03:52', 2),
 ('6cdef4ef43eb7dca182f290ab70a650cd933429a4db2267f4d38d32439c70dd7', '2026-11-11 03:15:38', 1),
-('7b50bc4e3576c57f8181cbdd4f14ea329a89188ab4473cf3e03d52a4ed94ecad', '2026-11-11 03:15:38', 1),
-('991e604f66c5073e0880e4b0809cfde635d4e55ea94212c99e9f0473b5b131a9', '2026-11-02 09:58:15', 1),
+('7b50bc4e3576c57f8181cbdd4f14ea329a89188ab4473cf3e03d52a4ed94ecad', '2026-11-11 04:02:36', 1),
+('991e604f66c5073e0880e4b0809cfde635d4e55ea94212c99e9f0473b5b131a9', '2026-11-11 04:02:36', 1),
+('d496eea5efd0c8c403f844ab83fed68b32958983bc3bf7059dde8e9c11951846', '2026-11-11 03:53:42', 2),
 ('e0a821c794b1ca3b2054eccc10f2800d121885ddf26a47ebe3a6f44c31c79efb', '2026-11-11 03:03:52', 1);
 
 -- --------------------------------------------------------
@@ -475,10 +476,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password_hash`, `role`, `created_at`, `token_version`, `is_active`) VALUES
-(2, 'admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$5RG6nZAFH753t4vGPU2Xgw$3oU5DaqW6JBnauCCcm1rAI8Z6fg5AD078fpZVAOZ3RQ', 'admin', '2026-10-28 14:48:30', 1, 1),
-(3, 'r@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$fHPDdPV8yz6Tk/eZBVEz4Q$0YNw+/X1aYL/+fyliLuoTBjZn8/KuszFmzoV9N+hzCw', 'employer', '2026-11-05 18:23:20', 0, 1),
-(4, 'chhomvisal168@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$KwdUhlXnuQttZ5HlSkGAQg$e80NNGriZrPRxkJtTarJWXyZj2GKzvjN+FEWDN1RyeM', 'employer', '2026-11-11 10:03:52', 0, 1),
-(5, 'chhomrosvisal@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$N9VS06rmvJwfgwi54F2h6g$6qpgJinTeCvPD4QX2B49w+aSeo6sN1qq5Y6754dDXjc', 'employer', '2026-11-11 10:15:38', 1, 1);
+(6, 'admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$/C0ni3cW3NFwCLOzBbWTCw$+yHWSUYFu1goemTs1wDkVL8dZmE32O1/Oj32nRodQb0', 'admin', '2026-11-11 11:00:50', 0, 1);
 
 --
 -- Indexes for dumped tables
