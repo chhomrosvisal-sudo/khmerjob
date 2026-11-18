@@ -1,12 +1,13 @@
 import { useI18n } from '../../i18n/useI18n'
 import { useState } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { useAuthForm } from '@auth-form'
 import { useAuth } from '../../hooks/useAuth'
 import { authService } from '../../services/authService'
 import { postLoginPath } from '../../services/auth-navigation'
 import { authLink } from '../../services/auth-links'
-import AuthLayout from '../../layouts/AuthLayout'
+import NeonAuthLayout from '../../layouts/NeonAuthLayout'
 import FormInput from '../../components/auth/FormInput'
 import PasswordInput from '../../components/auth/PasswordInput'
 import PasswordStrength from '../../components/auth/PasswordStrength'
@@ -34,14 +35,20 @@ export default function Register() {
       navigate(authLink('/login', params), { replace: true, state: { registered: true } })
     } catch (failure) { setError(failure.message || 'We could not create your account. Please try again.') }
   }
-  return <AuthLayout variant="register" demo={demo} footer={<><Link className="au-register-back" to="/">← {t("Back")}</Link><span className="au-register-signin">{t("Have an account?")} <Link to={authLink('/login', params)}>{t("Sign in")}</Link></span></>}><div className="au-heading"><h1>{t("Create your account")}</h1></div>
+  return <NeonAuthLayout
+    title={t("Sign Up")}
+    alternate={<Link to={authLink('/login', params)}>{t("Login")}</Link>}
+    alternateFirst
+    feedback={<AuthToast message={success} onDismiss={() => setSuccess('')} />}
+  >
     {demo && <p className="au-mode-note">{t("Frontend demo · no account will be created.")}</p>}
     <form className="au-form" noValidate onSubmit={form.handleSubmit(submit)}>
       <FormInput name="name" label={t("Name")} autoComplete="name" maxLength={80} inputProps={form.register('name')} error={errors.name} disabled={isSubmitting} />
-      <FormInput name="email" label={t("Email")} type="email" autoComplete="email" maxLength={254} inputProps={form.register('email')} error={errors.email} disabled={isSubmitting} />
+      <FormInput name="email" label={t("Email")} type="email" placeholder={t("you@example.com")} autoComplete="email" maxLength={254} inputProps={form.register('email')} error={errors.email} disabled={isSubmitting} />
       <PasswordInput placeholder={t("Use at least 12 characters")} autoComplete="new-password" maxLength={128} inputProps={form.register('password')} error={errors.password} disabled={isSubmitting} /><PasswordStrength value={form.watch('password')} />
       <PasswordInput name="confirmPassword" label={t("Confirm Password")} placeholder="" autoComplete="new-password" maxLength={128} inputProps={form.register('confirmPassword')} error={errors.confirmPassword} disabled={isSubmitting} />
-      <FormError message={error} /><PrimaryButton busy={isSubmitting} busyLabel={t("Creating account…")}>{t("Create Account")}</PrimaryButton>
-    </form><AuthToast message={success} onDismiss={() => setSuccess('')} />
-  </AuthLayout>
+      <FormError message={error} />
+      <PrimaryButton busy={isSubmitting} busyLabel={t("Creating account…")}>{t("Create Account")} <ArrowRight size={17} aria-hidden="true" /></PrimaryButton>
+    </form>
+  </NeonAuthLayout>
 }

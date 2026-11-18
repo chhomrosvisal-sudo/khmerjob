@@ -1,11 +1,12 @@
 import { useI18n } from '../../i18n/useI18n'
 import { useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
+import NeonAuthLayout from '../../layouts/NeonAuthLayout'
 import { useAuth } from '../../hooks/useAuth'
 import { useAuthForm } from '@auth-form'
 import { postLoginPath } from '../../services/auth-navigation'
 import { authLink } from '../../services/auth-links'
-import AuthLayout from '../../layouts/AuthLayout'
 import FormInput from '../../components/auth/FormInput'
 import PasswordInput from '../../components/auth/PasswordInput'
 import PrimaryButton from '../../components/auth/PrimaryButton'
@@ -39,17 +40,23 @@ export default function Login() {
       navigate(postLoginPath(account, params.get('next')), { replace: true })
     } catch (failure) { setError(failure.message || 'We could not sign you in. Please try again.') }
   }
-  return <AuthLayout variant="login" demo={demo}><div className="au-heading"><span className="au-eyebrow">{t("WELCOME BACK")}</span><h1>{employer ? t("Employer login") : t("Login")}</h1><p>{t("Login to access your website account.")}</p></div>
-    {location.state?.registered && <FormError success message={t("Account created. Log in to find a job.")} />}
-    {demo && <p className="au-mode-note">{t("Frontend demo · no real sign-in or dashboard access.")}</p>}
-    {employer && <p className="au-mode-note">{t("Sign in with your employer account. New employers can register below for administrator approval.")}</p>}
-    {employer && <p className="au-switch-page"><Link to="/employer-register">{t("Create an employer account")}</Link></p>}
-    <form className="au-form" noValidate onSubmit={form.handleSubmit(submit)}>
-      <FormInput name="email" label={t("Email")} type="email" placeholder={t("you@example.com")} autoComplete="username" maxLength={254} inputProps={form.register('email')} error={errors.email} disabled={isSubmitting} />
-      <PasswordInput placeholder={t("Enter your password")} autoComplete="current-password" maxLength={128} inputProps={form.register('password')} error={errors.password} disabled={isSubmitting} />
-      <div className="au-form-options"><label className="au-checkbox"><input type="checkbox" {...form.register('remember')} /><span>{t("Remember me")}</span></label><Link to={authLink('/forgot-password', params)}>{t("Forgot Password?")}</Link></div>
-      <p className="au-small-note">{t("Remember me saves your email. You stay signed in until you sign out or your session expires.")}</p><FormError message={error} />
-      <PrimaryButton busy={isSubmitting} busyLabel={t("Logging in…")}>{t("Login")}</PrimaryButton>
-    </form><p className="au-switch-page">{t("Don't have an account? ")}<Link to={authLink('/register', params)}>{t("Sign Up")}</Link></p><SocialLoginButtons /><AuthToast message={success} onDismiss={() => setSuccess('')} />
-  </AuthLayout>
+  const registerPath = employer ? '/employer-register' : authLink('/register', params)
+
+  return <NeonAuthLayout
+    title={employer ? t("Employer login") : t("Login")}
+    alternate={<Link to={registerPath}>{employer ? t("Create an employer account") : t("Sign Up")}</Link>}
+    feedback={<AuthToast message={success} onDismiss={() => setSuccess('')} />}
+  >
+        {location.state?.registered && <FormError success message={t("Account created. Log in to find a job.")} />}
+        {demo && <p className="au-mode-note">{t("Frontend demo · no real sign-in or dashboard access.")}</p>}
+        <form className="au-form" noValidate onSubmit={form.handleSubmit(submit)}>
+          <FormInput name="email" label={t("Email")} type="email" placeholder={t("you@example.com")} autoComplete="username" maxLength={254} inputProps={form.register('email')} error={errors.email} disabled={isSubmitting} />
+          <PasswordInput placeholder={t("Enter your password")} autoComplete="current-password" maxLength={128} inputProps={form.register('password')} error={errors.password} disabled={isSubmitting} />
+          <div className="au-form-options"><label className="au-checkbox"><input type="checkbox" {...form.register('remember')} /><span>{t("Remember me")}</span></label><Link to={authLink('/forgot-password', params)}>{t("Forgot Password?")}</Link></div>
+          <p className="au-small-note">{t("Remember me saves your email. You stay signed in until you sign out or your session expires.")}</p><FormError message={error} />
+          <PrimaryButton busy={isSubmitting} busyLabel={t("Logging in…")}>{t("Login")} <ArrowRight size={17} aria-hidden="true" /></PrimaryButton>
+        </form>
+        {employer && <p className="au-switch-page"><Link to={authLink('/register', params)}>{t("Sign Up")}</Link></p>}
+        <SocialLoginButtons />
+  </NeonAuthLayout>
 }

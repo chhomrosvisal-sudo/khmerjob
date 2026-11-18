@@ -1,0 +1,274 @@
+.auth-kit.neon-login {
+  --au-blue: #ffae90;
+  --neon-muted: #c1bcc5;
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  padding: clamp(18px, 4vw, 48px);
+  color: #f6f6f7;
+  background: #08090b;
+}
+
+.neon-login-art {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 75% 35%, #24252b, transparent 45%);
+}
+
+.neon-login-art i {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.neon-login-art i:nth-child(1) {
+  width: 380px;
+  height: 380px;
+  right: 5%;
+  top: 10%;
+  background: conic-gradient(from 20deg, #ff6b9b, #ffbd5c, #4bff79, #32e5fb, #ab55ff, #ff6b9b);
+  mask: radial-gradient(circle, transparent 34%, black 53%, transparent 72%);
+  filter: blur(14px);
+}
+
+.neon-login-art i:nth-child(2) {
+  width: 330px;
+  height: 330px;
+  left: -10%;
+  bottom: -18%;
+  background: conic-gradient(#fff, #333, #aaa, #111, #fff);
+  filter: blur(6px);
+  opacity: .7;
+}
+
+.neon-login-art i:nth-child(n+3) {
+  border: 30px solid #999;
+  box-shadow: inset 15px 20px 25px #fff, inset -25px -20px 20px #111, 10px 10px 30px #000;
+  opacity: .55;
+}
+
+.neon-login-art i:nth-child(3) {
+  width: 240px;
+  height: 240px;
+  right: -90px;
+  top: -110px;
+}
+
+.neon-login-art i:nth-child(4) {
+  width: 190px;
+  height: 190px;
+  left: -65px;
+  bottom: -75px;
+}
+
+.neon-login-top,
+.neon-login-panel {
+  width: min(100%, 760px);
+  margin-inline: auto;
+}
+
+.neon-login-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.neon-login-top > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.neon-login-panel {
+  padding: clamp(24px, 6vw, 52px);
+  background: linear-gradient(130deg, #26272ac4, #080809d4);
+  border: 1px solid #fff3;
+  border-radius: 26px;
+  backdrop-filter: blur(35px);
+  box-shadow: 0 24px 90px #0009;
+}
+
+.neon-login-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: clamp(16px, 6vw, 65px);
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.neon-login .neon-login-tabs h1,
+.neon-login .neon-login-tabs > a {
+  position: relative;
+  margin: 0;
+  color: #f6f6f7;
+  font-size: clamp(19px, 4vw, 30px);
+  line-height: 1.35;
+}
+
+.neon-login .neon-login-tabs > a {
+  color: var(--neon-muted);
+}
+
+.neon-login-tabs h1::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 30%;
+  width: 40%;
+  height: 3px;
+  background: #ff6b2c;
+  box-shadow: 0 0 10px #ff6b2c;
+}
+
+.neon-login-content {
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.neon-login .au-field > label,
+.neon-login .au-checkbox,
+.neon-login .au-small-note,
+.neon-login .au-divider,
+.neon-login .au-social > p {
+  color: var(--neon-muted);
+  font-size: 12px;
+}
+
+.neon-login .au-form-options > a,
+.neon-login .au-switch-page {
+  font-size: 12px;
+}
+
+.neon-login .au-field input {
+  background: #ffffff12;
+  border-color: #fff3;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.neon-login .au-field input::placeholder {
+  color: var(--neon-muted);
+  font-size: 13px;
+}
+
+.neon-login .au-field input:focus {
+  border-color: #fb754b;
+  box-shadow: 0 0 0 2px #fb754b55;
+}
+
+.neon-login .au-field input[aria-invalid="true"] {
+  border-color: #ff9f9f;
+}
+
+.neon-login .au-password-wrap > button {
+  color: var(--neon-muted);
+}
+
+.neon-login .au-password-wrap > button:hover {
+  background: #fff2;
+  color: white;
+}
+
+.auth-kit.neon-login .au-primary {
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #ef6b35, #f14e75);
+  color: #180b0a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-kit.neon-login .au-primary:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.auth-kit.neon-login .au-primary:disabled {
+  opacity: .7;
+}
+
+.neon-login .au-mode-note,
+.neon-login .au-feedback {
+  margin-bottom: 12px;
+  border-color: #fff3;
+  background: #ffffff12;
+  color: #ffb3a7;
+  font-size: 12px;
+}
+
+.neon-login .au-form .au-feedback {
+  margin-bottom: 0;
+}
+
+.neon-login .au-feedback.is-success {
+  color: #a3dfba;
+}
+
+.neon-login .au-field-error {
+  color: #ffb3a7;
+}
+
+.neon-login .au-strength > p {
+  color: var(--neon-muted);
+  font-size: 12px;
+}
+
+.neon-login .au-divider::before,
+.neon-login .au-divider::after {
+  background: #fff3;
+}
+
+.neon-login .au-social-buttons {
+  gap: 6px;
+}
+
+.neon-login .au-social-buttons button {
+  padding-inline: 4px;
+  background: linear-gradient(#3338, #1119);
+  border-color: #fff3;
+  border-radius: 9px;
+  color: #f6f6f7;
+  font-size: 11px;
+}
+
+.neon-login .au-social-buttons button:disabled {
+  color: var(--neon-muted);
+}
+
+.neon-login .au-social-buttons button:enabled {
+  cursor: pointer;
+}
+
+.neon-login .au-social-buttons button:enabled:hover {
+  background: #ffffff20;
+}
+
+.neon-login :focus-visible {
+  outline-color: #ffae90;
+}
+
+@media (max-width: 600px) {
+  .neon-login-art i:nth-child(1) {
+    right: -45%;
+  }
+
+  .neon-login .au-social-buttons button > svg {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-login .au-primary,
+  .neon-login .au-field input {
+    transition: none;
+  }
+
+  .auth-kit.neon-login .au-primary:hover:not(:disabled) {
+    transform: none;
+  }
+}
