@@ -1,0 +1,15 @@
+
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "frontend": {
+      "root": "khmer-job-matcher/frontend",
+      "framework": "vite"
+    },
+    "backend": {
+      "root": "khmer-job-matcher/backend",
+      "framework": "fastapi",
+      "entrypoint": "main:app"
+    }
+  }
+}
