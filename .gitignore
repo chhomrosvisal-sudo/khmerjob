@@ -1,0 +1,9 @@
+/khmer-job-matcher.rar
+
+# Local configuration and generated files
+.env
+.local-run/
+.local_models/
+node_modules/
+playwright-report/
+test-results/

@@ -1,13 +1,8 @@
-node_modules/
-dist/
-.env
-!.env.example
-venv/
-.venv/
+# Archives
+*.rar
+*.zip
+*.7z
+
+# Python cache
 __pycache__/
-uploads/
-.qa/
-.local-run/
-playwright-report/
-test-results/
-.local_models/
+.pytest_cache/
