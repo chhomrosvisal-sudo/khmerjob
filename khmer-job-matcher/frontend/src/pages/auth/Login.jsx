@@ -43,8 +43,8 @@ export default function Login() {
   const registerPath = employer ? '/employer-register' : authLink('/register', params)
 
   return <NeonAuthLayout
-    title={employer ? t("Employer login") : t("Login")}
-    alternate={<Link to={registerPath}>{employer ? t("Create an employer account") : t("Sign Up")}</Link>}
+    title={employer ? t("Log in") : t("Login")}
+    alternate={<Link to={registerPath}>{employer ? t("Sign up") : t("Sign Up")}</Link>}
     feedback={<AuthToast message={success} onDismiss={() => setSuccess('')} />}
   >
         {location.state?.registered && <FormError success message={t("Account created. Log in to find a job.")} />}
