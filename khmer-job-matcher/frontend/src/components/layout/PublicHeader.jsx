@@ -22,7 +22,7 @@ export default function PublicHeader({ user, onSignOut, loggingOut, unreadCount 
         <div className="portal-account"><LanguageSwitcher compact />
           {user && <><Link className="portal-login" to={user.role === 'admin' ? '/dashboard' : user.role === 'employer' ? '/employer/jobs' : '/account'}>{user.role === 'admin' ? t("Dashboard") : user.role === 'employer' ? t("My Jobs") : t("My Account")}</Link><button className="portal-signout" disabled={loggingOut} onClick={onSignOut}>{loggingOut ? t("Signing out…") : t("Sign out")}</button></>}
           {user && <Link to={user.role === 'student' ? '/account/notifications' : user.role === 'admin' ? '/dashboard/notifications' : '/notifications'} aria-label={t('Notifications')}><Bell size={16} />{unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}</Link>}
-          <Link className="portal-employer" to={user ? '/employer/jobs' : '/login?portal=employer'}>{t("Employer Portal")}<ArrowUpRight size={14} /></Link>
+          {!user && <Link className="portal-employer" to="/login?portal=employer">{t("Get started")}<ArrowUpRight size={14} /></Link>}
         </div>
       </div>
     </div>

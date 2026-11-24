@@ -29,8 +29,8 @@ export default function EmployerRegister() {
   const loginPath = authLink('/login', new URLSearchParams({ ...Object.fromEntries(params), portal: 'employer' }))
 
   return <NeonAuthLayout
-    title={t("Employer sign up")}
-    alternate={<Link to={loginPath}>{t("Login")}</Link>}
+    title={t("Sign up")}
+    alternate={<Link to={loginPath}>{t("Log in")}</Link>}
     alternateFirst
   >
     <p className="au-mode-note">{t("Create your employer account. An administrator must approve it before you can publish jobs.")}</p>
