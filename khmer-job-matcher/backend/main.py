@@ -1,6 +1,8 @@
-"""Compatibility entry point: uvicorn main:app still works from backend/."""
-from app.main import app  # noqa: F401
+# """Compatibility entry point: uvicorn main:app still works from backend/."""
+# from app.main import app  # noqa: F401
+"""Vercel and Uvicorn entry point."""
 
+from app.main import app
 
 from fastapi.middleware.cors import CORSMiddleware
 
