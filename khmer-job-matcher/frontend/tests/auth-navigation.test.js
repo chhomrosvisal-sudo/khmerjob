@@ -3,13 +3,14 @@ import assert from 'node:assert/strict'
 import { safeReturnPath, postLoginPath, roleHome } from '../src/services/auth-navigation.js'
 import { authLink } from '../src/services/auth-links.js'
 
-test('employer registration and recovery preserve the employer portal', () => {
+test('workspace recovery returns to workspace sign-in while registration stays public', () => {
   const params = new URLSearchParams('portal=employer&next=/employer/applications')
   const registration = new URL(authLink('/register', params), 'http://local.invalid')
-  assert.equal(registration.pathname, '/employer-register')
+  assert.equal(registration.pathname, '/register')
   assert.equal(registration.searchParams.get('next'), '/employer/applications')
   const recovery = new URL(authLink('/forgot-password', params), 'http://local.invalid')
-  assert.equal(recovery.searchParams.get('portal'), 'employer')
+  assert.equal(recovery.searchParams.get('portal'), 'workspace')
+  assert.equal(authLink('/login', recovery.searchParams), '/workspace-login?next=%2Femployer%2Fapplications')
   assert.equal(authLink('/register', new URLSearchParams()), '/register')
 })
 

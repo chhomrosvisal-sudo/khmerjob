@@ -1,10 +1,11 @@
 import { safeReturnPath } from './auth-navigation.js'
 
 export function authLink(path, params) {
-  if (path === '/register' && params.get('portal') === 'employer') path = '/employer-register'
+  const workspace = ['workspace', 'employer'].includes(params.get('portal'))
+  if (path === '/login' && workspace) path = '/workspace-login'
   const next = new URLSearchParams()
   if (params.get('next')) next.set('next', safeReturnPath(params.get('next')))
   if (params.get('demo') === '1') next.set('demo', '1')
-  if (params.get('portal') === 'employer') next.set('portal', 'employer')
+  if (workspace && path !== '/register' && path !== '/workspace-login') next.set('portal', 'workspace')
   return path + (next.size ? '?' + next.toString() : '')
 }

@@ -14,8 +14,8 @@ try {
   const { default: JobCard } = await server.ssrLoadModule('/src/components/JobCard.jsx')
   for (const language of ['en', 'km', 'zh']) {
     for (const [route, heading] of [['/', 'Find Your Dream Job in Cambodia'], ['/jobs', 'Find your next opportunity'],
-      ['/companies', 'Companies in Cambodia'], ['/login', 'Login'], ['/register', 'Create your account'],
-      ['/employer-register', 'Employer sign up'], ['/forgot-password', 'Forgot your password?']]) {
+      ['/companies', 'Companies in Cambodia'], ['/login', 'Login'], ['/register', 'Sign up'],
+      ['/workspace-login', 'Workspace sign in'], ['/forgot-password', 'Forgot your password?']]) {
       const html = renderToString(React.createElement(MemoryRouter, { initialEntries: [route] }, React.createElement(ApplicationRoutes, { initialLanguage: language })))
       assert.ok(html.includes(translate(language, heading)), `${language} ${route}`)
       assert.ok(html.includes(translate(language, 'Switch to night mode')), `${language} theme control`)
@@ -27,7 +27,7 @@ try {
         React.createElement(AuthContext.Provider, { value: { user: { role: 'admin', email: 'test@example.com' }, api: async () => ({}) } }, child)))
     }
     for (const [file, heading, route] of [
-      ['AdminDashboard', 'Recruitment overview', '/dashboard'], ['EmployerDashboard', 'Employer workspace', '/employer/company'],
+      ['AdminDashboard', 'Recruitment overview', '/dashboard'], ['AdminDashboard', 'Create company account', '/dashboard/employers'], ['EmployerDashboard', 'Employer workspace', '/employer/company'],
       ['Recommendations', 'Recommended jobs', '/account/recommendations'], ['Profile', 'My profile', '/account/profile'],
     ]) {
       const { default: Page } = await server.ssrLoadModule(`/src/pages/${file}.jsx`)

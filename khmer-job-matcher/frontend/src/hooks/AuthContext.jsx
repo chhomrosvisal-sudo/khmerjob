@@ -53,8 +53,9 @@ export function AuthProvider({ children }) {
     }, Math.max(0, session.expiresAt - Date.now()))
     return () => clearTimeout(timeout)
   }, [session])
-  const signIn = useCallback(async credentials => {
-    const result = await request('/api/auth/login', { method: 'POST', body: credentials })
+  const signIn = useCallback(async (credentials, workspace = false) => {
+    const path = workspace ? '/api/auth/workspace-login' : '/api/auth/job-seeker-login'
+    const result = await request(path, { method: 'POST', body: credentials })
     const user = await request('/api/auth/me', { token: result.access_token })
     const next = { token: result.access_token, user, expiresAt: Date.now() + result.expires_in * 1000 }
     setMessage(saveSession(next) ? '' : 'Signed in for this visit. Browser storage is unavailable, so refreshing will require sign-in.')

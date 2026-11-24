@@ -1048,6 +1048,22 @@ export const messages = {
     "km": "ចុះឈ្មោះនិយោជក",
     "zh": "雇主注册"
   },
+  "Workspace sign in": {
+    "km": "ចូលកន្លែងធ្វើការ",
+    "zh": "工作台登录"
+  },
+  "Create company account": {
+    "km": "បង្កើតគណនីក្រុមហ៊ុន",
+    "zh": "创建公司账户"
+  },
+  "Company account created. Approve the company when it is ready to publish jobs.": {
+    "km": "គណនីក្រុមហ៊ុនត្រូវបានបង្កើត។ អនុម័តក្រុមហ៊ុននៅពេលរួចរាល់ដើម្បីផ្សព្វផ្សាយការងារ។",
+    "zh": "公司账户已创建。公司准备发布职位时，请予以批准。"
+  },
+  "Use workspace sign-in for this account.": {
+    "km": "សូមចូលតាមកន្លែងធ្វើការសម្រាប់គណនីនេះ។",
+    "zh": "请通过工作台登录此账户。"
+  },
   "Create an employer account": {
     "km": "បង្កើតគណនីនិយោជក",
     "zh": "创建雇主账户"

@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Response, Request
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 
-from app.core.dependencies import CurrentUser, Database
+from app.core.dependencies import AdminUser, CurrentUser, Database
 from app.core.security import dummy_hash, hash_password, issue_token, unauthorized, verify_password
 from app.models import StudentProfile, User, Employer
 from pydantic import Field, field_validator
@@ -24,8 +24,7 @@ class EmployerRegistration(Credentials):
 
 
 @router.post('/employer-register', response_model=UserOut, status_code=201)
-def register_employer(payload: EmployerRegistration, request: Request, db: Database):
-    throttle(db, 'register-employer', request.client.host if request.client else 'unknown', 5, 900)
+def register_employer(payload: EmployerRegistration, db: Database, admin: AdminUser):
     user = User(email=str(payload.email), password_hash=hash_password(payload.password.get_secret_value()), role='employer')
     try:
         db.add(user)
@@ -57,11 +56,25 @@ def register(payload: Registration, request: Request, db: Database):
 
 @router.post('/login', response_model=TokenOut)
 def login(payload: Credentials, response: Response, request: Request, db: Database):
+    return authenticate(payload, response, request, db)
+
+
+@router.post('/job-seeker-login', response_model=TokenOut)
+def job_seeker_login(payload: Credentials, response: Response, request: Request, db: Database):
+    return authenticate(payload, response, request, db, roles=('student',))
+
+
+@router.post('/workspace-login', response_model=TokenOut)
+def workspace_login(payload: Credentials, response: Response, request: Request, db: Database):
+    return authenticate(payload, response, request, db, roles=('admin', 'employer'))
+
+
+def authenticate(payload, response, request, db, roles=None):
     throttle(db, 'login-ip', request.client.host if request.client else 'unknown', 100, 300)
     throttle(db, 'login', (request.client.host if request.client else 'unknown') + ':' + str(payload.email), 10, 300)
     user = db.scalar(select(User).where(User.email == str(payload.email)))
     valid = verify_password(payload.password.get_secret_value(), user.password_hash if user else dummy_hash())
-    if not valid or user is None or not user.is_active:
+    if not valid or user is None or not user.is_active or (roles and user.role not in roles):
         raise unauthorized()
     token, lifetime = issue_token(user)
     response.headers['Cache-Control'] = 'no-store'

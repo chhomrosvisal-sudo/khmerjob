@@ -99,6 +99,8 @@ def complete(provider: Provider, payload: CompleteBody, request: Request, db: Da
         user = db.get(User, linked.user_id)
         if not user or not user.is_active:
             raise HTTPException(401, 'This account is unavailable. Contact the administrator.')
+        if user.role != 'student':
+            raise HTTPException(403, 'Use workspace sign-in for this account.')
     else:
         # Never merge based only on email, including provider-reported verified email.
         if db.scalar(select(User.id).where(func.lower(User.email) == identity['email'].lower())):

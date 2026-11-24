@@ -54,7 +54,7 @@ describe('job application authentication journey', () => {
     render(<MemoryRouter initialEntries={['/jobs/42']}><AuthFlow /></MemoryRouter>)
 
     fireEvent.click(screen.getByRole('link', { name: 'Create Account' }))
-    expect(await screen.findByRole('heading', { name: 'Create your account' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Sign up' })).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Sokha Chan' } })
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'sokha@example.com' } })
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'A secure password 123!' } })

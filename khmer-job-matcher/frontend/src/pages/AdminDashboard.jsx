@@ -77,12 +77,45 @@ export default function AdminDashboard() {
     try { await api('/api/admin/skills', { method: 'POST', body: { name: data.get('name').trim(), name_km: data.get('name_km').trim() || null } }); form.reset(); setModelRevision(value => value + 1); setMessage('Skill added to the catalog.') }
     catch (failure) { setError(failure.message) } finally { setBusy(false) }
   }
+  async function createCompany(event) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const data = new FormData(form)
+    setBusy(true)
+    setError('')
+    setMessage('')
+    try {
+      await api('/api/auth/employer-register', {
+        method: 'POST',
+        body: { company: data.get('company').trim(), email: data.get('email').trim(), password: data.get('password') },
+      })
+      form.reset()
+      setQuery('')
+      setPage(1)
+      table.reload()
+      overview.reload()
+      setMessage('Company account created. Approve the company when it is ready to publish jobs.')
+    } catch (failure) {
+      setError(failure.message)
+    } finally {
+      setBusy(false)
+    }
+  }
   if (!Object.hasOwn(views, requestedView)) return <section className="card"><h1>{t('Page not found')}</h1><Link to="/dashboard">{t('Return to dashboard')}</Link></section>
   return <div className="admin-dashboard">
     <ConfirmDialog action={pendingAction} busy={busy} onCancel={() => setPendingAction(null)} onConfirm={() => act(pendingAction.path, pendingAction.body)} />
     <div className="admin-breadcrumb">{t('Workspace')}<span>/</span>{t(title)}</div>
     <div className="admin-page-heading"><div><span className="eyebrow">{t('ADMIN WORKSPACE')}</span><h1>{t(title)}</h1><p>{t(description)}</p></div><div className="admin-heading-actions"><button aria-label={t('Refresh dashboard')} onClick={() => { overview.reload(); table.reload(); approvals.reload(); setModelRevision(value => value + 1) }}><RefreshCw size={16} /></button><button className="primary" disabled={exporting} onClick={exportReport}><Download size={16} />{t(exporting ? 'Downloading...' : 'Export report')}</button></div></div>
     {error && <p className="notice error" role="alert">{t(error)}</p>}{message && <p className="notice" role="status">{t(message)}</p>}
+    {view === 'companies' && selectedView !== 'approvals' && <section className="admin-panel">
+      <form className="form-card" onSubmit={createCompany}>
+        <h2>{t('Create company account')}</h2>
+        <label>{t('Company name')}<input name="company" autoComplete="organization" maxLength={160} required /></label>
+        <label>{t('Email')}<input name="email" type="email" autoComplete="off" maxLength={254} required /></label>
+        <label>{t('Password')}<input name="password" type="password" autoComplete="new-password" minLength={12} maxLength={128} required /></label>
+        <button className="primary" disabled={busy}>{t('Create company account')}</button>
+      </form>
+    </section>}
     {['skill-gaps', 'activity-logs'].includes(view) && <AdminInsights activity={view === 'activity-logs'} revision={modelRevision} />}
     {view === 'overview' && <>
       <DashboardAnalytics revision={modelRevision} />

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
-import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, BriefcaseBusiness, Sparkles, UserRound, Settings, LogOut, Menu, Bell, Search, GraduationCap, PanelLeftClose, Users, Building2 } from 'lucide-react'
 import { AuthProvider } from './hooks/AuthContext'
 import { useAuth } from './hooks/useAuth'
@@ -28,7 +28,6 @@ import Protected from './components/common/RequireAuth'
 import Account from './pages/Account'
 import EmployerDashboard from './pages/EmployerDashboard'
 import { Companies, CompanyProfile } from './pages/Companies'
-import EmployerRegister from './pages/auth/EmployerRegister'
 import SocialCallback from './pages/auth/SocialCallback'
 import SocialLoginButtons from './components/auth/SocialLoginButtons'
 import ThemeToggle from './components/common/ThemeToggle'
@@ -153,7 +152,7 @@ function Workspace() {
           <Route path="/employer/applications" element={<Protected role="employer"><EmployerDashboard /></Protected>} />
           <Route path="/employer/company" element={<Protected role="employer"><EmployerDashboard /></Protected>} />
           <Route path="/employer/analytics" element={<Protected role="employer"><EmployerDashboard /></Protected>} />
-          <Route path="/settings" element={<Protected><section className="card form-card"><h1>{t("Make yourself at home")}</h1><label>{t("Language")}</label><LanguageSwitcher /><p>{t("Choose the interface language for the website and dashboards.")}</p><h2>{t("Your account")}</h2><p>{user ? `${user.email} · ${t(user.role)}` : t("You are browsing as a guest.")}</p><p>{t("Your profile and saved jobs stay with your account. Refreshing keeps you signed in until you sign out or your session expires.")}</p><SocialLoginButtons linking /></section></Protected>} />
+          <Route path="/settings" element={<Protected><section className="card form-card"><h1>{t("Make yourself at home")}</h1><label>{t("Language")}</label><LanguageSwitcher /><p>{t("Choose the interface language for the website and dashboards.")}</p><h2>{t("Your account")}</h2><p>{user ? `${user.email} · ${t(user.role)}` : t("You are browsing as a guest.")}</p><p>{t("Your profile and saved jobs stay with your account. Refreshing keeps you signed in until you sign out or your session expires.")}</p>{user?.role === 'student' && <SocialLoginButtons linking />}</section></Protected>} />
           <Route path="*" element={<section className="card"><h1>{t("Page not found")}</h1><Link to="/dashboard">{t("Return to dashboard")}</Link></section>} />
         </Routes>{dashboardView && <footer>{t("Made for the next generation of Cambodian talent.")}<span>Khmer Job & Skills Matcher</span></footer>}
       </main>
@@ -172,7 +171,7 @@ function SmartHomeWorkspace() {
   const { t } = useI18n()
   const { signOut, sessionKey } = useAuth()
   const navigate = useNavigate()
-  async function logout() { await signOut(); navigate('/login', { replace: true }) }
+  async function logout() { await signOut(); navigate('/workspace-login', { replace: true }) }
   return <Suspense fallback={<p role="status" className="card">{t("Loading Smart Home dashboard…")}</p>}><SmartHomeDashboard key={sessionKey} onSignOut={logout} /></Suspense>
 }
 
@@ -181,7 +180,8 @@ export function ApplicationRoutes({ initialLanguage } = {}) {
     <Route path="/oauth/callback" element={<SocialCallback />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route path="/employer-register" element={<EmployerRegister />} />
+    <Route path="/workspace-login" element={<Login workspace />} />
+    <Route path="/employer-register" element={<Navigate to="/workspace-login" replace />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
     <Route path="/verify-code" element={<VerifyCode />} />
     <Route path="/reset-password" element={<ResetPassword />} />

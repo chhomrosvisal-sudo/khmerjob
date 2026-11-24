@@ -64,7 +64,7 @@ Restart an already running API after editing its `.env`. Start the frontend in a
 ## Accounts and security
 
 - New social identities create normal job-seeker (`student`) accounts and profiles. Social sign-in never creates administrators or employers.
-- An existing identity logs into its existing local account. The current database role and active status are enforced, including normal admin/employer routing.
+- An existing identity can sign in to an active job-seeker account. Company and admin accounts sign in with their password at `/workspace-login`.
 - Matching an email does **not** merge accounts. If an email/password or another-provider account already exists, sign in with that existing method, open **Settings**, and connect Google/Facebook. Job seekers can reach Settings from the account navigation. This requires a valid account session before starting the connection.
 - Connection preserves the local account's email, applications, saved jobs, and role. The provider account may use a different email, so connect only an account you own. An identity already attached to another user cannot be taken over. Only one identity per provider per local user is supported. Unlinking is not provided in this version.
 - Five-minute, single-use OAuth transactions are stored as hashed state plus a hashed independent browser verifier. An atomic database claim rejects callback replay. Google also binds the code exchange with S256 PKCE. Linking records the initiating account's session version; logout/revocation invalidates pending linking.

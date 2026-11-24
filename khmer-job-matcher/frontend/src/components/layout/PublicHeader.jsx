@@ -2,7 +2,7 @@ import { LanguageSwitcher } from '../../i18n/LanguageContext'
 import { useI18n } from '../../i18n/useI18n'
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { BriefcaseBusiness, Menu, X, ArrowUpRight, Bell } from 'lucide-react'
+import { BriefcaseBusiness, Menu, X, Bell } from 'lucide-react'
 
 export default function PublicHeader({ user, onSignOut, loggingOut, unreadCount = 0 }) {
   const location = useLocation()
@@ -20,9 +20,9 @@ export default function PublicHeader({ user, onSignOut, loggingOut, unreadCount 
           <NavLink to="/companies">{t("Companies")}</NavLink><NavLink to="/categories">{t("Job Categories")}</NavLink><NavLink to="/career-advice">{t("Career Advice")}</NavLink>
         </nav>
         <div className="portal-account"><LanguageSwitcher compact />
+          {!user && <Link className="portal-login" to="/login">{t("Login")}</Link>}
           {user && <><Link className="portal-login" to={user.role === 'admin' ? '/dashboard' : user.role === 'employer' ? '/employer/jobs' : '/account'}>{user.role === 'admin' ? t("Dashboard") : user.role === 'employer' ? t("My Jobs") : t("My Account")}</Link><button className="portal-signout" disabled={loggingOut} onClick={onSignOut}>{loggingOut ? t("Signing out…") : t("Sign out")}</button></>}
           {user && <Link to={user.role === 'student' ? '/account/notifications' : user.role === 'admin' ? '/dashboard/notifications' : '/notifications'} aria-label={t('Notifications')}><Bell size={16} />{unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}</Link>}
-          {!user && <Link className="portal-employer" to="/login?portal=employer">{t("Get started")}<ArrowUpRight size={14} /></Link>}
         </div>
       </div>
     </div>

@@ -49,9 +49,22 @@ def test_matching_and_preferences(client):
 
 def test_employer_approval_company_profile_and_job_closure(client, engine):
     admin = privileged(client, engine, 'admin', 'admin-complete@example.com')
-    created = client.post('/api/auth/employer-register', json={'email': 'new-employer@example.com', 'password': PASSWORD, 'company': 'New Employer'})
+    student = seeker(client, 'closed-job@example.com')
+    credentials = {'email': 'new-employer@example.com', 'password': PASSWORD}
+    payload = {**credentials, 'company': 'New Employer'}
+    assert client.post('/api/auth/employer-register', json=payload).status_code == 401
+    assert client.post('/api/auth/employer-register', headers=student, json=payload).status_code == 403
+    created = client.post('/api/auth/employer-register', headers=admin, json=payload)
     assert created.status_code == 201 and created.json()['role'] == 'employer'
-    employer = auth(client, 'new-employer@example.com')
+    assert client.post('/api/auth/job-seeker-login', json=credentials).status_code == 401
+    assert client.post('/api/auth/job-seeker-login', json={'email': 'closed-job@example.com', 'password': PASSWORD}).status_code == 200
+    assert client.post('/api/auth/workspace-login', json={'email': 'closed-job@example.com', 'password': PASSWORD}).status_code == 401
+    assert client.post('/api/auth/job-seeker-login', json={'email': 'admin-complete@example.com', 'password': PASSWORD}).status_code == 401
+    assert client.post('/api/auth/workspace-login', json={'email': 'admin-complete@example.com', 'password': PASSWORD}).status_code == 200
+    response = client.post('/api/auth/workspace-login', json=credentials)
+    assert response.status_code == 200
+    employer = {'Authorization': 'Bearer ' + response.json()['access_token']}
+    assert client.post('/api/auth/employer-register', headers=employer, json=payload).status_code == 403
     job = {'title': 'Python Developer', 'description': 'Python services', 'location': 'Phnom Penh', 'job_type': 'Full-time', 'salary_min': 400, 'salary_max': 800}
     assert client.post('/api/jobs', headers=employer, json=job).status_code == 403
     company = client.get('/api/employer/company', headers=employer).json()
@@ -63,7 +76,6 @@ def test_employer_approval_company_profile_and_job_closure(client, engine):
     assert client.get(f'/api/companies/{company["id"]}').json()['job_count'] == 1
     assert client.patch(f'/api/jobs/{job_id}/state', headers=employer, json={'is_active': False}).status_code == 200
     assert client.get(f'/api/jobs?company_id={company["id"]}').json()['total'] == 0
-    student = seeker(client, 'closed-job@example.com')
     assert client.post(f'/api/applications/{job_id}', headers=student).status_code == 409
     assert client.get('/api/admin/overview', headers=student).status_code == 403
     assert client.get('/api/admin/overview', headers=admin).json()['pending_employers'] == 0

@@ -93,7 +93,7 @@ def test_email_collision_requires_authenticated_link_and_preserves_admin_role(cl
     assert client.post('/api/auth/social/google/link', json={'verifier': VERIFIER}).status_code == 401
     linked = account(client, finish(client, begin(client, headers=headers)))
     assert linked['role'] == 'admin'
-    assert account(client, finish(client, begin(client)))['id'] == linked['id']
+    assert finish(client, begin(client)).status_code == 403
     assert client.get('/api/auth/social/connections', headers=headers).json() == {'providers': ['google']}
     assert client.post('/api/auth/social/google/link', headers=headers, json={'verifier': VERIFIER}).status_code == 409
 

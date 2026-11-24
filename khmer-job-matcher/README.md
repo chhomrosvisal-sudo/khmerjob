@@ -15,7 +15,8 @@ A Cambodian recruitment portal with a React/Vite frontend, FastAPI API, and MySQ
 | Recommendations | http://localhost:5173/account/recommendations | Job seeker |
 | Applications / updates | `/account/applications` ? `/account/notifications` | Job seeker |
 | Company directory | http://localhost:5173/companies | Public |
-| Employer onboarding | http://localhost:5173/employer-register | Public; publishing needs approval |
+| Company onboarding | http://localhost:5173/dashboard/employers | Admin only; publishing needs approval |
+| Company and admin sign-in | http://localhost:5173/workspace-login | Company and admin accounts |
 | Employer jobs | http://localhost:5173/employer/jobs | Employer |
 | Applicants / company / analytics | `/employer/applications` ? `/employer/company` ? `/employer/analytics` | Employer |
 | Administrator dashboard | http://localhost:5173/dashboard | Admin only |
@@ -107,7 +108,7 @@ If you own this local installation and cannot sign in, reset an existing account
 .\venv\Scripts\python.exe -m app.reset_password --email admin@example.com
 ```
 
-Enter a new password of 12-128 characters twice when prompted. Password input is hidden. The command preserves the user's role, profile, and applications and revokes old sessions and recovery codes. It never creates or promotes users and never accepts a password as a command-line argument. Then sign in at `http://localhost:5173/login`. This operator command is not a public password-reset API.
+Enter a new password of 12-128 characters twice when prompted. Password input is hidden. The command preserves the user's role, profile, and applications and revokes old sessions and recovery codes. It never creates or promotes users and never accepts a password as a command-line argument. Then sign in at `/login` for job seekers or `/workspace-login` for company and admin accounts. This operator command is not a public password-reset API.
 
 ## Password recovery email setup
 
@@ -229,7 +230,7 @@ See [release checks](docs/RELEASE_CHECKS.md). English/Khmer navigation exists, b
 
 ## Admin dashboard workspace
 
-Sign in with an existing administrator account at `/login`, then open `/dashboard`. The sidebar links to the overview, users, company approvals, job moderation, and skills/matching tools. Overview counts and the application pipeline use the live admin API. The employer review queue supports approval; the full company directory supports search and a pending-only filter. CSV export includes the existing platform summary. No growth rates or historical trends are inferred from current totals.
+Sign in with an existing administrator account at `/workspace-login`, then open `/dashboard`. To register a company account, open Employers and submit the company name, email, and initial password. Approve the company when it is ready to publish jobs. The sidebar links to the overview, users, company approvals, job moderation, and skills/matching tools. Overview counts and the application pipeline use the live admin API. The employer review queue supports approval; the full company directory supports search and a pending-only filter. CSV export includes the existing platform summary. No growth rates or historical trends are inferred from current totals.
 
 Run `npm run test:admin` from `frontend` for fixture-backed rendering checks of populated tables, application counts, pending approvals, protected administrator controls, empty results, and API errors. These checks do not change the database or replace browser interaction testing.
 

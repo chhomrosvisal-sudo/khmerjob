@@ -230,6 +230,10 @@ Good password	ពាក្យសម្ងាត់ល្អ	密码强度良好
 Strong password	ពាក្យសម្ងាត់រឹងមាំ	高强度密码
 Employer login	ចូលគណនីនិយោជក	雇主登录
 Employer sign up	ចុះឈ្មោះនិយោជក	雇主注册
+Workspace sign in	ចូលកន្លែងធ្វើការ	工作台登录
+Create company account	បង្កើតគណនីក្រុមហ៊ុន	创建公司账户
+Company account created. Approve the company when it is ready to publish jobs.	គណនីក្រុមហ៊ុនត្រូវបានបង្កើត។ អនុម័តក្រុមហ៊ុននៅពេលរួចរាល់ដើម្បីផ្សព្វផ្សាយការងារ។	公司账户已创建。公司准备发布职位时，请予以批准。
+Use workspace sign-in for this account.	សូមចូលតាមកន្លែងធ្វើការសម្រាប់គណនីនេះ។	请通过工作台登录此账户。
 Create an employer account|Create employer account	បង្កើតគណនីនិយោជក	创建雇主账户
 Have an employer account?	មានគណនីនិយោជកហើយ?	已有雇主账户？
 Company name	ឈ្មោះក្រុមហ៊ុន	公司名称

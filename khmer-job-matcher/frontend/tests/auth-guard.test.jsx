@@ -6,7 +6,7 @@ import RequireAuth from '../src/components/common/RequireAuth'
 
 function LoginDestination() { const location = useLocation(); return <p>Login destination: {location.search}</p> }
 function mount(user) {
-  return render(<MemoryRouter initialEntries={['/smart-home/devices']}><AuthContext.Provider value={{ user }}><Routes><Route path="/" element={<h1>Public website</h1>} /><Route path="/smart-home/*" element={<RequireAuth role="admin"><h1>Private devices</h1></RequireAuth>} /><Route path="/login" element={<LoginDestination />} /><Route path="/jobs" element={<h1>Find jobs</h1>} /></Routes></AuthContext.Provider></MemoryRouter>)
+  return render(<MemoryRouter initialEntries={['/smart-home/devices']}><AuthContext.Provider value={{ user }}><Routes><Route path="/" element={<h1>Public website</h1>} /><Route path="/smart-home/*" element={<RequireAuth role="admin"><h1>Private devices</h1></RequireAuth>} /><Route path="/workspace-login" element={<LoginDestination />} /><Route path="/jobs" element={<h1>Find jobs</h1>} /></Routes></AuthContext.Provider></MemoryRouter>)
 }
 describe('dashboard authentication', () => {
   it('redirects guests before private dashboard content mounts', async () => {
