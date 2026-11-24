@@ -18,11 +18,11 @@ export default function EmployerRegister() {
   const { signIn, user } = useAuth(), navigate = useNavigate()
   const [params] = useSearchParams()
   const [error, setError] = useState(''), [created, setCreated] = useState(false)
-  const form = useAuthForm({ mode: created ? 'login' : 'employer-register', defaultValues: { company: '', email: '', password: '', confirmPassword: '', terms: false } })
+  const form = useAuthForm({ mode: created ? 'login' : 'employer-register', defaultValues: { UserName: '', email: '', password: '', confirmPassword: '', terms: false } })
   async function submit(values) {
     setError('')
     try {
-      if (!created) { await request('/api/auth/employer-register', { method: 'POST', body: { company: values.company.trim(), email: values.email.trim(), password: values.password } }); setCreated(true) }
+      if (!created) { await request('/api/auth/employer-register', { method: 'POST', body: { UserName: values.UserName.trim(), email: values.email.trim(), password: values.password } }); setCreated(true) }
       const account = await signIn({ email: values.email.trim(), password: values.password }); navigate(postLoginPath(account, params.get('next') || '/employer/company'), { replace: true })
     } catch (failure) { setError(failure.message) }
   }
