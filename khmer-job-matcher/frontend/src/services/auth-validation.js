@@ -19,7 +19,7 @@ export function validateAuthForm(mode, values) {
     if (!values.name?.trim() || values.name.trim().length > 80) errors.name = 'Enter a name between 1 and 80 characters.'
   }
   if (mode === 'employer-register') {
-    if (!values.company?.trim() || values.company.trim().length > 160) errors.company = 'Enter a company name of 1–160 characters.'
+    if (!values.UserName?.trim() || values.UserName.trim().length > 160) errors.UserName = 'Enter a username of 1–160 characters.'
     if (!values.terms) errors.terms = 'Please accept the employer onboarding notice.'
   }
   if (['register', 'employer-register', 'reset'].includes(mode) && values.confirmPassword !== values.password) errors.confirmPassword = 'Your passwords do not match.'

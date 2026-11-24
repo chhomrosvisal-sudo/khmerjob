@@ -31,8 +31,8 @@ test('job display uses actual salary/date data and curated categories', () => {
 })
 
 test('employer onboarding validates company and consent without accepting privilege input', () => {
-  const values = { company: 'Mekong Company', email: 'employer@example.com', password: 'long-company-password', confirmPassword: 'long-company-password', terms: true }
+  const values = { UserName: 'Mekong Company', email: 'employer@example.com', password: 'long-company-password', confirmPassword: 'long-company-password', terms: true }
   assert.deepEqual(validateAuthForm('employer-register', values), {})
-  assert.ok(validateAuthForm('employer-register', { ...values, company: ' ' }).company)
+  assert.ok(validateAuthForm('employer-register', { ...values, UserName: ' ' }).UserName)
   assert.ok(validateAuthForm('employer-register', { ...values, terms: false }).terms)
 })
