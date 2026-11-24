@@ -36,8 +36,8 @@ export default function Register() {
     } catch (failure) { setError(failure.message || 'We could not create your account. Please try again.') }
   }
   return <NeonAuthLayout
-    title={t("Sign Up")}
-    alternate={<Link to={authLink('/login', params)}>{t("Login")}</Link>}
+    title={t("Sign up")}
+    alternate={<Link to={authLink('/login', params)}>{t("Log in")}</Link>}
     alternateFirst
     feedback={<AuthToast message={success} onDismiss={() => setSuccess('')} />}
   >
